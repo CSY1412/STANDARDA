@@ -76,5 +76,11 @@ void setGimabalAuxMode(gimabal_aux_mode_e enu);
 _Bool confirmGimabalAuxMode(gimabal_main_stat_e enu);
 void setChasisFollowStat(chasis_follow_stat_e enu);
 _Bool confirmChasisFollowStat(chasis_follow_stat_e enu);
+void setControlMode(control_mode_e enu);
+_Bool confirmControlMode(control_mode_e enu);
+void setShootMode(shoot_mode_e enu);
+_Bool confirmShootMode(shoot_mode_e enu);
+void setFricmotorStat(fricmotor_stat_e enu);
+_Bool confirmFricmotorStat(fricmotor_stat_e enu);
 
 #endif

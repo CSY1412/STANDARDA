@@ -69,9 +69,9 @@ void ParamInit(void)
 	
 	Rc_Init();//遥控器通道初始化
 	setSystemStat(preparing);  //准备状态
-	chasis_follow_stat=self_move;  //底盘不跟随
-	gimabal_main_stat=free_and_preparing;//云台释放掉
-	control_mode=remote;
+	setChasisFollowStat(self_move);  //底盘不跟随
+	confirmGimabalMainStat(free_and_preparing);//云台释放掉
+	setControlMode(remote);
 	shoot_mode=point;  //点射模式
 
 }
