@@ -9,7 +9,7 @@
 extern u32 last_back_time;
 
 typedef enum{
-preparing,  ///准备
+preparing,  //准备
 running,   // 正常运动
 self_stabilization, //稳定
 breaking,   //硬件故障
@@ -38,11 +38,6 @@ self_move,    //不跟随云台
 }chasis_follow_stat_e;
 extern chasis_follow_stat_e chasis_follow_stat;
 
-typedef enum{
-raw_contrl,  //开环模式
-pid_contrl,  //PID闭环模式
-}chasis_motor_stat_e;
-extern chasis_motor_stat_e chasis_motor_stat;
 
 typedef enum{
 remote, 
@@ -72,7 +67,14 @@ void JudgeChasisStat(void);
 void JudgeCalibration(void);
 void MicroStepMotorControl(void);
 void KEYFunction(void);
-void SetSystemStat(system_stat_e enu);
-void SetGimabalMainStat(gimabal_main_stat_e enu);
+
+void setSystemStat(system_stat_e enu);
+_Bool confirmSystemStat(system_stat_e enu);
+void setGimabalMainStat(gimabal_main_stat_e enu);
+_Bool confirmGimabalMainStat(gimabal_main_stat_e enu);
+void setGimabalAuxMode(gimabal_aux_mode_e enu);
+_Bool confirmGimabalAuxMode(gimabal_main_stat_e enu);
+void setChasisFollowStat(chasis_follow_stat_e enu);
+_Bool confirmChasisFollowStat(chasis_follow_stat_e enu);
 
 #endif

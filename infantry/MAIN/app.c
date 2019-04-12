@@ -57,17 +57,18 @@ void BspInit(void)
 void ParamInit(void)
 {
 	DJI_PID_Param_Init();  //初始化大疆PID	
+	
 	first_order_filter_init(&gesture_sensor_Gx,0.001f,0.02f);   //Gx数据滤波初始化
 	first_order_filter_init(&chassis_slow_set_vx,0.004f,CHASSIS_ACCEL_X_NUM);    //一阶低通滤波代替斜波作为底盘速度输入
-	first_order_filter_init(&chassis_slow_set_vy,0.004f,CHASSIS_ACCEL_Y_NUM);    //
+	first_order_filter_init(&chassis_slow_set_vy,0.004f,CHASSIS_ACCEL_Y_NUM);    
 	first_order_filter_init(&chassis_follow_QE,0.004f,CHASSIS_ACCEL_QE_NUM);    //QE斜坡
 	first_order_filter_init(&chasis_power_control,0.02f,0.2);
-
+	
 	USART5_FIFO_Init();//裁判系统fifo初始化
 	FirstFlashRead();//第一次FLSASH读取
 	
 	Rc_Init();//遥控器通道初始化
-	system_stat=preparing;  //准备状态
+	setSystemStat(preparing);  //准备状态
 	chasis_follow_stat=self_move;  //底盘不跟随
 	gimabal_main_stat=free_and_preparing;//云台释放掉
 	control_mode=remote;

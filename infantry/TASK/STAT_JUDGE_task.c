@@ -22,7 +22,6 @@ system_stat_e system_stat;  	//ÏµÍ³ÔËĞĞ×´Ì¬
 chasis_follow_stat_e chasis_follow_stat;  //µ×ÅÌ¸úËæ×´Ì¬
 gimabal_main_stat_e gimabal_main_stat; //ÔÆÌ¨Ö÷×´Ì¬
 gimabal_aux_mode_e gimabal_aux_mode;  //×ÓÄ£Ê½
-chasis_motor_stat_e chasis_motor_stat;//µ×ÅÌµç»úÄ£Ê½
 control_mode_e control_mode;      //Ò£¿Ø¼üÅÌÄ£Ê½ 
 shoot_mode_e shoot_mode;         //Éä»÷Ä£Ê½
 fricmotor_stat_e fricmotor_stat;//Ä¦²ÁÂÖ×´Ì¬
@@ -316,16 +315,32 @@ void JudgeCalibration(void)
 }
 
 
+
 /**
   * @brief      	ÉèÖÃÏµÍ³×´Ì¬
   * @author       ÎÏÅ£ÎÏÅ£ÅÜ
   * @param[in]         
   * @retval       
   */
-void SetSystemStat(system_stat_e enu)
+void setSystemStat(system_stat_e enu)
 {
 	system_stat=enu;
 }
+
+/**
+  * @brief      	ÅĞ¶ÏÏµÍ³×´Ì¬
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+_Bool confirmSystemStat(system_stat_e enu)
+{
+	if(system_stat==enu)
+		return 1;
+	else
+		return 0;
+}
+
 
 /**
   * @brief      	ÉèÖÃÔÆÌ¨Ö÷×´Ì¬
@@ -333,9 +348,146 @@ void SetSystemStat(system_stat_e enu)
   * @param[in]         
   * @retval       
   */
-void SetGimabalMainStat(gimabal_main_stat_e enu)
+void setGimabalMainStat(gimabal_main_stat_e enu)
 {
 	gimabal_main_stat=enu;
 }
+/**
+  * @brief      	ÅĞ¶ÏÔÆÌ¨Ö÷×´Ì¬
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+_Bool confirmGimabalMainStat(gimabal_main_stat_e enu)
+{
+	if(gimabal_main_stat==enu)
+		return 1;
+	else
+		return 0;
+}
+
+/**
+  * @brief      	ÉèÖÃÔÆÌ¨Ä£Ê½
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+void setGimabalAuxMode(gimabal_aux_mode_e enu)
+{
+	gimabal_aux_mode=enu;
+}
+/**
+  * @brief      	ÅĞ¶ÏÔÆÌ¨Ä£Ê½
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+_Bool confirmGimabalAuxMode(gimabal_main_stat_e enu)
+{
+	if(gimabal_main_stat==enu)
+		return 1;
+	else
+		return 0;
+}
+
+
+/**
+  * @brief      	ÉèÖÃµ×ÅÌ¸úËæÄ£Ê½
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+void setChasisFollowStat(chasis_follow_stat_e enu)
+{
+	chasis_follow_stat=enu;
+}
+/**
+  * @brief      	ÅĞ¶Ïµ×ÅÌÄ£Ê½
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+_Bool confirmChasisFollowStat(chasis_follow_stat_e enu)
+{
+	if(chasis_follow_stat==enu)
+		return 1;
+	else
+		return 0;
+}
+
+
+/**
+  * @brief      	ÉèÖÃ¿ØÖÆÄ£Ê½
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+void setControlMode(control_mode_e enu)
+{
+	control_mode=enu;
+}
+/**
+  * @brief      	ÅĞ¶Ï¿ØÖÆÄ£Ê½
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+_Bool confirmControlMode(control_mode_e enu)
+{
+	if(control_mode==enu)
+		return 1;
+	else
+		return 0;
+}
+
+
+/**
+  * @brief      	ÉèÖÃÉä»÷Ä£Ê½
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+void setShootMode(shoot_mode_e enu)
+{
+	shoot_mode=enu;
+}
+/**
+  * @brief      	ÅĞ¶ÏÉä»÷Ä£Ê½
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+_Bool confirmShootMode(shoot_mode_e enu)
+{
+	if(shoot_mode==enu)
+		return 1;
+	else
+		return 0;
+}
+
+/**
+  * @brief      	ÉèÖÃÄ¦²ÁÂÖ×´Ì¬
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+void setFricmotorStat(fricmotor_stat_e enu)
+{
+	fricmotor_stat=enu;
+}
+/**
+  * @brief      	ÅĞ¶ÏÄ¦²ÁÂÖ×´Ì¬
+  * @author       ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]         
+  * @retval       
+  */
+_Bool confirmFricmotorStat(fricmotor_stat_e enu)
+{
+	if(fricmotor_stat==enu)
+		return 1;
+	else
+		return 0;
+}
+
 
 
