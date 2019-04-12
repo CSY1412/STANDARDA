@@ -1,6 +1,9 @@
 #ifndef USER_LIB_H
 #define USER_LIB_H
 #include "main.h"
+
+typedef  float      fp32;
+
 typedef __packed struct
 {
     fp32 input;        //ÊäÈëÊı¾İ

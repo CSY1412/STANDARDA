@@ -3580,56 +3580,56 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      1664        562          0          4         24      34293   app.o
-       314         32          0          4          0       1997   aux_task.o
-       124         16          0          4          0       1728   beep.o
-       964         70          0          0        120       7394   can.o
-       740        108          0          4         24       2968   chasis_task.o
-       840         76          0          0         36       3155   conclude_task.o
-        92          8          0          8          0        854   config_param_task.o
-       220         18          0          4          0       2537   delay.o
+      1664        562          0          4         24      34253   app.o
+       314         32          0          4          0       1985   aux_task.o
+       124         16          0          4          0       1716   beep.o
+       964         70          0          0        120       7362   can.o
+       740        108          0          4         24       2956   chasis_task.o
+       840         76          0          0         36       3151   conclude_task.o
+        92          8          0          8          0        846   config_param_task.o
+       220         18          0          4          0       2525   delay.o
          0          0          0          0         40        763   detection_task.o
-         0          0          0          0          0      11784   event_groups.o
-       532        138          0          0        310       5602   flash.o
-       288         16          0          0          0       1725   fricmotor.o
-      2052        392          0          0         24       6809   gimbal_task.o
-       764        182          0         24      20480       4526   heap_4.o
-      3292         96          0          8        390       9345   io_task.o
+         0          0          0          0          0      11780   event_groups.o
+       532        138          0          0        310       5582   flash.o
+       288         16          0          0          0       1717   fricmotor.o
+      2052        392          0          0         24       6777   gimbal_task.o
+       764        182          0         24      20480       4510   heap_4.o
+      3292         96          0          8        390       9317   io_task.o
         48          6          0          0          0        507   key.o
-       294         42          0          1          0       2226   led.o
-       148          0          0          0          0       3238   list.o
-       556        266          0         44          0     329840   main.o
-       180         24          0          0          0       2081   misc.o
-       752         96          0          0       1040       3979   pid.o
-      1182        396          0         12          0      10905   port.o
-      2164        238          0          0         64      13421   queue.o
-       800         52        770          2       1336       8557   reference_task.o
-       116          8          0          8          0       1668   shoot_task.o
-        36          8        392          0       1536        836   startup_stm32f40_41xxx.o
-      1216        324          0         21          0       6778   stat_judge_task.o
-      1654         22          0          0          0       7552   stm32f4xx_can.o
-       864         72          0          0          0      10061   stm32f4xx_dma.o
-       398         40          0          0          0       4501   stm32f4xx_flash.o
-       258          0          0          0          0       4069   stm32f4xx_gpio.o
-        20          0          0          0          0       2845   stm32f4xx_it.o
-       392         48          0         16          0       5817   stm32f4xx_rcc.o
-       520         48          0          0          0       6198   stm32f4xx_tim.o
-       686         42          0          0          0       6111   stm32f4xx_usart.o
-       340         32          0         20          0       1837   system_stm32f4xx.o
-      4278       1048          0         60        740      34365   tasks.o
-       288         24          0          0          0       2292   timer3.o
-      1310        312          0         20         40       8875   timers.o
-        36          8          0          6        256       2466   usart.o
-      1262         84          0          5        192       6664   usart1.o
-       176         18          0          1        256       1072   usart2.o
-       732         52          0          2        512       2698   usart3.o
-       684         44          0          1        148       3087   usart4.o
-       608         60          0          1        256       2480   usart5.o
-       708         50          0          1        272       2978   usart6.o
-       176          6          0          0        172       3766   user_lib.o
+       294         42          0          1          0       2222   led.o
+       148          0          0          0          0       3218   list.o
+       556        266          0         44          0     329784   main.o
+       180         24          0          0          0       2073   misc.o
+       752         96          0          0       1040       3967   pid.o
+      1182        396          0         12          0      10889   port.o
+      2164        238          0          0         64      13385   queue.o
+       800         52        770          2       1336       8545   reference_task.o
+       116          8          0          8          0       1656   shoot_task.o
+        36          8        392          0       1536        844   startup_stm32f40_41xxx.o
+      1216        324          0         21          0       6754   stat_judge_task.o
+      1654         22          0          0          0       7532   stm32f4xx_can.o
+       864         72          0          0          0      10029   stm32f4xx_dma.o
+       398         40          0          0          0       4481   stm32f4xx_flash.o
+       258          0          0          0          0       4049   stm32f4xx_gpio.o
+        20          0          0          0          0       2837   stm32f4xx_it.o
+       392         48          0         16          0       5789   stm32f4xx_rcc.o
+       520         48          0          0          0       6174   stm32f4xx_tim.o
+       686         42          0          0          0       6099   stm32f4xx_usart.o
+       340         32          0         20          0       1825   system_stm32f4xx.o
+      4278       1048          0         60        740      34277   tasks.o
+       288         24          0          0          0       2284   timer3.o
+      1310        312          0         20         40       8847   timers.o
+        36          8          0          6        256       2454   usart.o
+      1262         84          0          5        192       6652   usart1.o
+       176         18          0          1        256       1068   usart2.o
+       732         52          0          2        512       2690   usart3.o
+       684         44          0          1        148       3079   usart4.o
+       608         60          0          1        256       2468   usart5.o
+       708         50          0          1        272       2966   usart6.o
+       176          6          0          0        172       3746   user_lib.o
 
     ----------------------------------------------------------------------
-     34820       5184       1196        288      28272     599250   Object Totals
+     34820       5184       1196        288      28272     598430   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         52          0          2          7          4          0   (incl. Padding)
 
@@ -3690,8 +3690,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     38832       5280       1196        296      28272     586583   Grand Totals
-     38832       5280       1196        296      28272     586583   ELF Image Totals
+     38832       5280       1196        296      28272     585763   Grand Totals
+     38832       5280       1196        296      28272     585763   ELF Image Totals
      38832       5280       1196        296          0          0   ROM Totals
 
 ==============================================================================
