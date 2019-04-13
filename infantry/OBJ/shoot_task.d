@@ -73,7 +73,7 @@
 ..\obj\shoot_task.o: ..\RmLib\pid_regulator.h
 ..\obj\shoot_task.o: ..\BSP\PID.h
 ..\obj\shoot_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\shoot_task.o: ..\RmLib\fifo.h
+..\obj\shoot_task.o: ..\BSP\fifo.h
 ..\obj\shoot_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\shoot_task.o: ..\TASK\AUX_task.h
 ..\obj\shoot_task.o: ..\TASK\GIMBAL_task.h

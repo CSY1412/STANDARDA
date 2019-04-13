@@ -45,7 +45,8 @@ extern PID_Regulator_t gimbal_pitch_slef_aim_pid;
 
 extern PID_Regulator_t chasis_motor_power_pid;
 
-
+extern PID_Regulator_t sad;
+extern PID_Struct sadas;;
 float PIDz_Calculate(PID_Struct* PID, float measured, float expect);
 float PID_Calculate(PID_Struct* PID, float measured, float expect);
 void PID_Init(PID_Struct *PID,float kp,float ti,float td,

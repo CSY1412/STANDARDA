@@ -73,7 +73,7 @@
 ..\obj\chasis_task.o: ..\RmLib\pid_regulator.h
 ..\obj\chasis_task.o: ..\BSP\PID.h
 ..\obj\chasis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\chasis_task.o: ..\RmLib\fifo.h
+..\obj\chasis_task.o: ..\BSP\fifo.h
 ..\obj\chasis_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\chasis_task.o: ..\TASK\AUX_task.h
 ..\obj\chasis_task.o: ..\TASK\GIMBAL_task.h

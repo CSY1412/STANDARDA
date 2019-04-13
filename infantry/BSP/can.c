@@ -232,7 +232,7 @@ s16 transe_angle(s16 angle,u16 first_angle)
 		angle=angle+8191;
 		if(angle>8191)
 		angle=angle-8191;
-		return angle;	
+		return angle-4096;	
 }
 
 /********************************************************************************
@@ -355,7 +355,8 @@ void Process3508Data(chasis_motor_t *motor, u8 *message)
 {
 		 motor->last_angle=motor->angle;
 		 motor->angle = (message[0]<<8)|message[1];
-		 motor->speed = (message[2]<<8)|message[3];
+		 motor->rpm = (message[2]<<8)|message[3];
+		 motor->speed= (float)motor->rpm*M3508_MOTOR_RPM_TO_VECTOR;
 		 motor->current=(message[4]<<8)|message[5];
 		 motor->temperature=message[6];	
 }
@@ -369,7 +370,7 @@ void Process3508Data(chasis_motor_t *motor, u8 *message)
 void Process6623Data(gimbal_motor_t* motor,u8 *message)
 {
 		motor->real_angle=message[0]<<8|message[1];
-		motor->cal_angle=transe_angle(motor->real_angle,flash_save_data_temp.gimbal_yaw_zero);  //矫正过后的机械角度
+		motor->cal_angle=(float)(360/8192)*transe_angle(motor->real_angle,flash_save_data_temp.gimbal_yaw_zero);  //矫正过后的机械角度
 		motor->last_angle=gimbal_motor->this_angle;
 		motor->this_angle=gimbal_motor->cal_angle;
 		motor->angle_speed=gimbal_motor->this_angle-gimbal_motor->last_angle;

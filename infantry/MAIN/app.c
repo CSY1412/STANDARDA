@@ -18,7 +18,7 @@
 #include "app.h"
 
 
-extend_angle_t extend_angle;  //扩展角度
+
 static u32 sysTickCnt=0;  //系统时间计数
 
 
@@ -56,7 +56,7 @@ void BspInit(void)
   */
 void ParamInit(void)
 {
-	DJI_PID_Param_Init();  //初始化大疆PID	
+	DJI_PID_Param_Init();  //初始化大疆PID	结构体
 	
 	first_order_filter_init(&gesture_sensor_Gx,0.001f,0.02f);   //Gx数据滤波初始化
 	first_order_filter_init(&chassis_slow_set_vx,0.004f,CHASSIS_ACCEL_X_NUM);    //一阶低通滤波代替斜波作为底盘速度输入
@@ -71,8 +71,8 @@ void ParamInit(void)
 	setSystemStat(preparing);  //准备状态
 	setChasisFollowStat(self_move);  //底盘不跟随
 	confirmGimabalMainStat(free_and_preparing);//云台释放掉
-	setControlMode(remote);
-	shoot_mode=point;  //点射模式
+	setControlMode(remote);  //设置为遥控状态
+	setFricmotorStat(off);  //关闭摩擦轮
 
 }
 
@@ -126,6 +126,8 @@ u32 GetSysTickCnt(void)
   * @param[in]   原始角度      
   * @retval      无 
   */
+
+extend_angle_t extend_angle;  //扩展角度
 void ExtendAngle(volatile extend_angle_t *v, float raw_angle)
 {
 	int i=0;
@@ -169,53 +171,53 @@ float GetMax(float a,float b,float c,float d)
 
 
 
-/**
-  * @brief       处理yaw轴期望并且限制
-  * @author      蜗牛蜗牛跑
-  * @param[in]   
-  * @param[in]         
-  * @retval      
-**/
-float ProcessGimbalexp(float input,float max_offset)
-{
-		_Bool allow_increase = 0;   //允许增减标志
-		_Bool allow_decrease = 0;
+///**
+//  * @brief       处理yaw轴期望并且限制
+//  * @author      蜗牛蜗牛跑
+//  * @param[in]   
+//  * @param[in]         
+//  * @retval      
+//**/
+//float ProcessGimbalexp(float input,float max_offset)
+//{
+//		_Bool allow_increase = 0;   //允许增减标志
+//		_Bool allow_decrease = 0;
 
-		
-		 if(gimbal_motor[0].cal_angle-4096<-max_offset)
-		{
-				allow_increase=0;    //不允许增加
-				allow_decrease=1;		 //允许减少
-		}
-		else if(gimbal_motor[0].cal_angle-4096>max_offset)
-		{
-				allow_increase=1;    //允许增加
-				allow_decrease=0;		 //不允许减少
-		}	
-		else
-		{
-				allow_increase=1;    //允许增加
-				allow_decrease=1;		 //允许减少
-		}
-		
-		if(allow_increase==1&&allow_decrease==0)  //如果只允许增加
-		{
-				if(input<0)
-				{
-						input=0;
-				}		
-		}	
-		if(allow_increase==0&&allow_decrease==1)  //如果只允许增加
-		{
-				if(input>0)
-				{
-						input=0;
-				}		
-		}
-		
-		return input;
+//		
+//		 if(gimbal_motor[0].cal_angle-4096<-max_offset)
+//		{
+//				allow_increase=0;    //不允许增加
+//				allow_decrease=1;		 //允许减少
+//		}
+//		else if(gimbal_motor[0].cal_angle-4096>max_offset)
+//		{
+//				allow_increase=1;    //允许增加
+//				allow_decrease=0;		 //不允许减少
+//		}	
+//		else
+//		{
+//				allow_increase=1;    //允许增加
+//				allow_decrease=1;		 //允许减少
+//		}
+//		
+//		if(allow_increase==1&&allow_decrease==0)  //如果只允许增加
+//		{
+//				if(input<0)
+//				{
+//						input=0;
+//				}		
+//		}	
+//		if(allow_increase==0&&allow_decrease==1)  //如果只允许增加
+//		{
+//				if(input>0)
+//				{
+//						input=0;
+//				}		
+//		}
+//		
+//		return input;
 
-}
+//}
 
 
 /**
@@ -367,4 +369,5 @@ void FirstFlashRead(void)
 		NVIC_SystemReset();	  //重启	
 	}
 }
+
 

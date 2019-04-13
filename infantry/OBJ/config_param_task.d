@@ -73,7 +73,7 @@
 ..\obj\config_param_task.o: ..\RmLib\pid_regulator.h
 ..\obj\config_param_task.o: ..\BSP\PID.h
 ..\obj\config_param_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\config_param_task.o: ..\RmLib\fifo.h
+..\obj\config_param_task.o: ..\BSP\fifo.h
 ..\obj\config_param_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\config_param_task.o: ..\TASK\AUX_task.h
 ..\obj\config_param_task.o: ..\TASK\GIMBAL_task.h

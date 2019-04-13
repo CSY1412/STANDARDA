@@ -73,7 +73,7 @@
 ..\obj\stat_judge_task.o: ..\RmLib\pid_regulator.h
 ..\obj\stat_judge_task.o: ..\BSP\PID.h
 ..\obj\stat_judge_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\stat_judge_task.o: ..\RmLib\fifo.h
+..\obj\stat_judge_task.o: ..\BSP\fifo.h
 ..\obj\stat_judge_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\stat_judge_task.o: ..\TASK\AUX_task.h
 ..\obj\stat_judge_task.o: ..\TASK\GIMBAL_task.h

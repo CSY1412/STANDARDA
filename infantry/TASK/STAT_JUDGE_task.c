@@ -68,18 +68,9 @@ void JudgeSystemStat(void)
 		if(last_key_valu.s2==1&&this_key_valu.s2==3) //从上拨到中
 		{
 			system_stat=running;  //系统配置为运行模式
-			#if DEBUG_CHASIS	 //如果是调试地盘模式		
-			gimabal_main_stat=free_and_preparing;
-			gimabal_aux_stat=normal;  //云台慢速回位//云台主状态
-			#else
 			gimabal_main_stat=control;//云台主状态
-					#if DEBUG_GIMBAL
-					gimabal_aux_stat=normal;  //云台慢速回位
-					#else
-					gimabal_aux_mode=slowing;
-					#endif
-			#endif
-						
+			//gimabal_aux_mode=slowing;
+			gimabal_aux_mode=normal;		
 			chasis_follow_stat=self_move;//不跟随
 			
 			last_back_time = GetSysTickCnt();  //获取系统时间
@@ -238,21 +229,10 @@ void MicroStepMotorControl(void)
 
 void KEYFunction(void)
 {
-		static _Bool ano_tc_state=0;
+	
 		if(this_key_valu.board_s1==1&&last_key_valu.board_s1==0) //按键0按下
 		{	
-			   ano_tc_state=!ano_tc_state;
-			   if(ano_tc_state==0)
-					{
-						printf("上位机已经挂起\n");
-					//	vTaskSuspend(ANO_DTTask_Handler);  //挂起上位机任务
-						
-					}
-					else
-					{
-				//		vTaskResume(ANO_DTTask_Handler);  //恢复上位机任务
-						printf("上位机已经恢复\n");
-					}					
+			 CAN_CMD_CHASSIS_RESET_ID();
 		}
 		if(this_key_valu.board_s2==1&&last_key_valu.board_s2==0) //打印任务信息
 		{

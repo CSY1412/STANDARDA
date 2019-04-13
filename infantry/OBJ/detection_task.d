@@ -73,7 +73,7 @@
 ..\obj\detection_task.o: ..\RmLib\pid_regulator.h
 ..\obj\detection_task.o: ..\BSP\PID.h
 ..\obj\detection_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\detection_task.o: ..\RmLib\fifo.h
+..\obj\detection_task.o: ..\BSP\fifo.h
 ..\obj\detection_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\detection_task.o: ..\TASK\AUX_task.h
 ..\obj\detection_task.o: ..\TASK\GIMBAL_task.h

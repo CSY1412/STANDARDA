@@ -43,19 +43,18 @@ void start_task(void *pvParameters)
 {
     taskENTER_CRITICAL();           //进入临界区
 		
-    xTaskCreate(STAT_JUDGE_task,"STAT_JUDGE_task",128,NULL,17,&STAT_JUDGETask_Handler);
-    xTaskCreate(CHASIS_task,"CHASIS_task",128,NULL,19,&CHASISTask_Handler);
-    xTaskCreate(GIMBAL_task,"GIMBAL_task",128,NULL,20,&GIMBALTask_Handler);
-    xTaskCreate(CONCLUDE_task,"CONCLUDE_task",128,NULL,21,&CONCLUDETask_Handler);
+   xTaskCreate(STAT_JUDGE_task,"STAT_JUDGE_task",128,NULL,17,&STAT_JUDGETask_Handler);  //状态机
+    xTaskCreate(CHASIS_task,"CHASIS_task",128,NULL,19,&CHASISTask_Handler);    //底盘任务
+    xTaskCreate(GIMBAL_task,"GIMBAL_task",128,NULL,20,&GIMBALTask_Handler);  //云台任务
+    xTaskCreate(CONCLUDE_task,"CONCLUDE_task",1024,NULL,21,&CONCLUDETask_Handler); //底盘速度总结
 		xTaskCreate(Upload_task,"Upload_task",512,NULL,17,&UploadTask_Handler); //上位机程序
-    xTaskCreate(AUX_task,"AUX_task",128,NULL,2,&AUXTask_Handler);
-		xTaskCreate(CONFIG_PARAM_Task,"CONFIG_PARAM_Task",128,NULL,5,&CONFIG_PARAM_Task_Handler);		
+    xTaskCreate(AUX_task,"AUX_task",128,NULL,2,&AUXTask_Handler);  //辅助程序
+		xTaskCreate(CONFIG_PARAM_Task,"CONFIG_PARAM_Task",128,NULL,5,&CONFIG_PARAM_Task_Handler);	 //flash保存任务	
 	  xTaskCreate(REFERENCE_task,"REFERENCE_task",512,NULL,18,&REFERENCE_Task_Handler);	  //裁判系统
-		xTaskCreate(SHOOT_task,"SHOOT_Task_Handler",128,NULL,4,&SHOOT_Task_Handler);	
+		xTaskCreate(SHOOT_task,"SHOOT_Task_Handler",128,NULL,4,&SHOOT_Task_Handler);	  //射击任务
 	
     printf("Free heap: %d bytes\n\n", xPortGetFreeHeapSize());	/*打印剩余堆栈大小*/
     vTaskDelete(StartTask_Handler);    //删除开始任务
-
     taskEXIT_CRITICAL();               //退出临界区
 }
 

@@ -23,13 +23,19 @@ void BEEP_Init(void)
 }
 
 
+
+/**
+  * @brief    ·äÃùÆ÷
+  * @author   ÎÏÅ£ÎÏÅ£ÅÜ
+  * @param[in]      
+  * @retval       
+  */
 void BeepAlam(void) 
 {
 	for(int i=0;i<beep_valu;i++)
 	{
 		PBout(15)=1;
 		vTaskDelay(60);
-
 	}
 	PBout(15)=0;//¹Ø±Õ
 	beep_valu=0;	

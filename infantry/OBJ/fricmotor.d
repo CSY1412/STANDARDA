@@ -73,7 +73,7 @@
 ..\obj\fricmotor.o: ..\RmLib\pid_regulator.h
 ..\obj\fricmotor.o: ..\BSP\PID.h
 ..\obj\fricmotor.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\fricmotor.o: ..\RmLib\fifo.h
+..\obj\fricmotor.o: ..\BSP\fifo.h
 ..\obj\fricmotor.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\fricmotor.o: ..\TASK\AUX_task.h
 ..\obj\fricmotor.o: ..\TASK\GIMBAL_task.h

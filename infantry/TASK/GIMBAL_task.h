@@ -9,6 +9,7 @@ typedef struct
 	float pitchexp;
 	float pitchout;
 	float pitchtemp;
+	float pitchadd;
 }pitch_t;
 extern pitch_t pitchdata;
 
@@ -18,6 +19,7 @@ typedef struct
 	float yawexp;
 	float yawout;
 	float yawtemp;
+	float yawadd;
 }yaw_t;
 extern yaw_t yawdata;
 void GIMBAL_task(void *pvParameters);
@@ -27,8 +29,6 @@ void GimbalCtl(void);
 void GimbalNomalCtl(void); //云台控制
 void CheckUpFinishi(void);
 void ProtectGimbal(void);  //云台保护
-void GimbalYawAngleLimit(float max_angle_offset);
-void GimbalPitchAngleLimit(float max_pitch,float min_pitch);
 void GimbalQuickBack(void);
 void CheckUpQuickBackFinishi(void);
 void GimbalSlefaimCtl(void);

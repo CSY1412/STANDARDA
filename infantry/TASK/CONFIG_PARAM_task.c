@@ -28,14 +28,11 @@ void CONFIG_PARAM_Task(void* param)
 	config_param_xSemaphore = xSemaphoreCreateBinary();  //创建flash信号量	
 	while(1) 
 	{	
-
-			xSemaphoreTake(config_param_xSemaphore, portMAX_DELAY);
-		
+			xSemaphoreTake(config_param_xSemaphore, portMAX_DELAY);	//等待信号量	
 			if (GetSysTickCnt() - semaphoreGiveTime > 2000)//上次释放信号量时间至少大于2秒才写Flash，防止频繁写入
 			{
 				semaphoreGiveTime = GetSysTickCnt();
-				Flash_Data_Save();  //保存flash
-				
+				Flash_Data_Save();  //保存flash				
 			}
 			else
 			{

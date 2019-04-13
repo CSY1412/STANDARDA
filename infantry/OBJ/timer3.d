@@ -73,7 +73,7 @@
 ..\obj\timer3.o: ..\RmLib\pid_regulator.h
 ..\obj\timer3.o: ..\BSP\PID.h
 ..\obj\timer3.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\timer3.o: ..\RmLib\fifo.h
+..\obj\timer3.o: ..\BSP\fifo.h
 ..\obj\timer3.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\timer3.o: ..\TASK\AUX_task.h
 ..\obj\timer3.o: ..\TASK\GIMBAL_task.h

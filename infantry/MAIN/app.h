@@ -18,10 +18,6 @@
 #define RATE_DO_EXECUTE(RATE_HZ, TICK) ((TICK % (RATE_1000_HZ / RATE_HZ)) == 0)
 
 
-#define CHASSIS_ACCEL_X_NUM 0.0966666667f  //越大越缓慢
-#define CHASSIS_ACCEL_Y_NUM 0.07f
-#define CHASSIS_ACCEL_QE_NUM 0.15f
-
 
 typedef struct{
 	float raw_value;   									//编码器不经处理的原始值

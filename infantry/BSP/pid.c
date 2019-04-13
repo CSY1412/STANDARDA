@@ -19,8 +19,9 @@ PID_Regulator_t gimbal_pitch_slef_aim_pid;
 
 
 PID_Regulator_t chasis_motor_power_pid;
+PID_Regulator_t sad;
 
-
+PID_Struct sadas;
 
 void DJI_PID_Param_Init(void)
 {
@@ -75,7 +76,8 @@ float DJI_PID_Cal(PID_Regulator_t* PID,float measure,float exp,float outmax)
 		PID->ref=exp;
 		PID->fdb=measure;
 		PID->outputMax=outmax;
-		PID_Calc(PID);
+		PID_Reset(PID);
+		//PID_Calc(PID);
 		return PID->output;
 }
 

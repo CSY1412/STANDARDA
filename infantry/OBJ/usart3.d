@@ -73,7 +73,7 @@
 ..\obj\usart3.o: ..\RmLib\pid_regulator.h
 ..\obj\usart3.o: ..\BSP\PID.h
 ..\obj\usart3.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\usart3.o: ..\RmLib\fifo.h
+..\obj\usart3.o: ..\BSP\fifo.h
 ..\obj\usart3.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\usart3.o: ..\TASK\AUX_task.h
 ..\obj\usart3.o: ..\TASK\GIMBAL_task.h

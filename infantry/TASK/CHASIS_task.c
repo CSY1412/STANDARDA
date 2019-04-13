@@ -40,14 +40,14 @@ void CHASIS_task(void *pvParameters)
 	while(1)        //调试内容
 	{
 		vTaskDelayUntil(&lastWakeTime, F2T(RATE_1000_HZ));
-			if(system_stat==running)  //运行模式
+			if(confirmSystemStat(running))  //运行模式
 			{	
-						if (RATE_DO_EXECUTE(RATE_250_HZ, GetSysTickCnt()))  //250hz
-					{
-							ChasisControl();  //底盘控制
-					}			
+					if (RATE_DO_EXECUTE(RATE_250_HZ, GetSysTickCnt()))  //250hz
+				{
+						ChasisControl();  //底盘控制
+				}			
 			}
-			else if(system_stat==self_stabilization) //稳定模式
+			else if(confirmSystemStat(self_stabilization)) //稳定模式
 			{
 				LockChasis();   //底盘锁定
 			}
@@ -58,7 +58,7 @@ void CHASIS_task(void *pvParameters)
 				ChasisControl();  //底盘控制 
 			}
 	#else
-			else if(system_stat==breaking)
+			else if(confirmSystemStat(breaking))
 			{
 				Set_CM_Speed(0,0,0,0);
 				BeepON();	
@@ -85,18 +85,22 @@ void ChasisControl(void)
 		if(chasis_follow_stat==follow_gimabal)  //如果处于云台跟随状态
 		{
 				ChasisRoteCal();
-		}		
+		}
+
+		
 		if(chasis_follow_stat==self_move)    //云台不跟随
 		{
 			chasis_expspeed.rotate=0;  //无旋转量
 		}
 		if(control_mode==remote)//遥控模式
 		{
+			
+			
 																	/*斜坡*/			
-					chasis_expspeed.x=first_order_filter_cali(&chassis_slow_set_vx,(cal_ch.ch0-1024)*7);  //水平速度期望  
-					chasis_expspeed.y=first_order_filter_cali(&chassis_slow_set_vy,(cal_ch.ch1-1024)*12); //竖直速度期望
+					chasis_expspeed.x=first_order_filter_cali(&chassis_slow_set_vx,((cal_ch.ch0-1024)/660)*RC_CHASSIS_SPEED_Y);  //水平速度期望  
+					chasis_expspeed.y=first_order_filter_cali(&chassis_slow_set_vy,((cal_ch.ch1-1024)/660)*RC_CHASSIS_SPEED_X); //竖直速度期望
 					 //停止信号，不需要缓慢加速，直接减速到零
-				#if SPEEDREDUCESLOP
+				#if SPEED_REDUCE_SLPOP
 								if ((cal_ch.ch0-1024)==0)
 									{
 											chasis_expspeed.x = 0.0f;
@@ -106,26 +110,27 @@ void ChasisControl(void)
 											chasis_expspeed.y = 0.0f;
 									}
 				#endif				
-		}			
+		}	
+		
 				if(control_mode==keyboard)//遥控模式
-		{
-																	/*斜坡*/			
+		{				
+				if(key_boad.key_W)key_expspeed.y=KEY_CHASSIS_SPEED_Y;
+						else if(key_boad.key_S)key_expspeed.y=-KEY_CHASSIS_SPEED_Y;
+							else key_expspeed.y=0;
+				if(key_boad.key_A)key_expspeed.x=-KEY_CHASSIS_SPEED_X;
+						else if(key_boad.key_D)key_expspeed.x=KEY_CHASSIS_SPEED_X;
+								else key_expspeed.x=0;			
+				if(key_boad.key_SHIFT&&key_boad.key_W)key_expspeed.y=SHIFT_CHASSIS_SPEED_Y;  //shift加速
 					
-				if(key_boad.key_W)key_expspeed.y=5000;else if(key_boad.key_S)key_expspeed.y=-5000;else key_expspeed.y=0;
-				if(key_boad.key_A)key_expspeed.x=-5000;else if(key_boad.key_D)key_expspeed.x=5000;else key_expspeed.x=0;
-				
-				if(key_boad.key_SHIFT&&key_boad.key_W)key_expspeed.y=SHIFT_SPEEDMAX;  //shift加速
-				
-			
-					chasis_expspeed.x=first_order_filter_cali(&chassis_slow_set_vx,key_expspeed.x);  //水平速度期望  
-					chasis_expspeed.y=first_order_filter_cali(&chassis_slow_set_vy,key_expspeed.y); //竖直速度期望
+				chasis_expspeed.x=first_order_filter_cali(&chassis_slow_set_vx,key_expspeed.x);  //水平速度期望  
+				chasis_expspeed.y=first_order_filter_cali(&chassis_slow_set_vy,key_expspeed.y); //竖直速度期望
 					 //停止信号，不需要缓慢加速，直接减速到零
-				#if SPEEDREDUCESLOP
-								if ((cal_ch.ch0-1024)==0)
+				#if SPEED_REDUCE_SLPOP
+								if ((!key_boad.key_A)&&(!key_boad.key_D))
 									{
 											chasis_expspeed.x = 0.0f;
 									}
-											if ((cal_ch.ch1-1024)==0)
+											if ((!key_boad.key_W)&&(!key_boad.key_S))
 									{
 											chasis_expspeed.y = 0.0f;
 									}
@@ -177,6 +182,10 @@ void ChasisRoteCal(void)
 		}		
 				
 }
+
+
+
+
 
 
 

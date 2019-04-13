@@ -284,7 +284,7 @@ void Upload_task(void *pvParameters)
         for(i=0; i<SHOW_DATA_NUM; i++) //Ìî³äÏÔÊ¾Êý¾Ý
             UploadData.ShowData[i]=i;
 			
-		
+				
 		      UploadData.ShowData[11-10]=judge_rece_mesg.blood_changed_data.hurt_type;
 					UploadData.ShowData[12-10]=judge_rece_mesg.blood_changed_data.armor_type;
 					UploadData.ShowData[13-10]=judge_rece_mesg.game_information.remain_hp;

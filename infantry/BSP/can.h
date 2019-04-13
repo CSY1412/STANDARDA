@@ -24,16 +24,16 @@ typedef struct
  {
 	u16 last_angle; //上一次的角度
 	u16 angle;      //机械角度
-	int16_t speed;  //转子转速
+	int16_t rpm;  //转子转速
 	int16_t current;//实际转矩电流 （仅3508有）
 	uint8_t temperature;//电机温度    （仅3508有）
-	 
+	float speed;
  }chasis_motor_t;
 extern chasis_motor_t chasis_motor[4];
 
 typedef  struct    
 {        
-	u16 cal_angle;  // 计算后的角度
+	float cal_angle;  // 计算后的角度
 	u16 real_angle;  //真实编码器返还角度
 	float last_angle;
 	float this_angle;

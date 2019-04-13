@@ -2,20 +2,16 @@
 #define __MAIN_H
 
 
-//整车配置
+/*---------------整车配置---------------*/
 #include "config.h"
 
-
-//操作系统头文件
+/*---------------操作系统头文件----------*/
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "task.h"
 #include "semphr.h"
 
-
-
-//外设头文件
-
+/*---------------外设头文件--------------*/
 #include "led.h"
 #include "key.h"
 #include "myiic.h"
@@ -30,15 +26,12 @@
 #include "beep.h"
 #include "timer3.h"
 #include "flash.h"
-
-
-//32库头文件
+/*---------------32库头文件--------------*/
 #include "sys.h"
 #include "delay.h"
 #include "usart.h"
 
-
-//算法头文件
+/*---------------算法头文件--------------*/
 #include "app.h"
 #include "user_lib.h"
 #include "pid_regulator.h"
@@ -48,8 +41,7 @@
 #include "fifo.h"
 
 
-
-//任务头文件
+/*---------------任务头文件--------------*/
 #include "AUX_task.h"
 #include "GIMBAL_task.h"
 #include "CHASIS_task.h"
@@ -63,7 +55,7 @@
 
 
 
-
+/*---------------任务句柄--------------*/
 extern TaskHandle_t STAT_JUDGETask_Handler;
 extern TaskHandle_t CHASISTask_Handler;
 extern TaskHandle_t GIMBALTask_Handler;
@@ -73,6 +65,8 @@ extern TaskHandle_t UploadTask_Handler;
 extern TaskHandle_t CONFIG_PARAM_Task_Handler;
 extern TaskHandle_t REFERENCE_Task_Handler;
 extern TaskHandle_t SHOOT_Task_Handler;
+
+
 void start_task(void *pvParameters);//任务函数
 void vApplicationIdleHook( void );
 

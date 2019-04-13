@@ -18,7 +18,7 @@
 
 #include "CONCLUDE_task.h"
 
-cm_motor_t cm_motor={0};
+cm_motor_t cm_motor;
 
 
 /**
@@ -39,12 +39,12 @@ void CONCLUDE_task(void *pvParameters)
 
 		if (RATE_DO_EXECUTE(RATE_250_HZ, GetSysTickCnt()))  //250hz
 			{
-				
+					if(system_stat!=preparing)   //不处于准备状态				
+				{
+					CalChasisAndSend();
+				}
 			}
-			if(system_stat!=preparing)   //不处于准备状态				
-			{
-				CalChasisAndSend();
-			}
+
 	}
 			
 }
@@ -58,32 +58,25 @@ void CONCLUDE_task(void *pvParameters)
   */
 void CalChasisAndSend(void)  
 {
-	
-	
-		cm_motor.cm_temp1=-chasis_expspeed.y+chasis_expspeed.x+chasis_expspeed.rotate;
-		cm_motor.cm_temp2=chasis_expspeed.y+chasis_expspeed.x+chasis_expspeed.rotate;
-		cm_motor.cm_temp3=-chasis_expspeed.y-chasis_expspeed.x+chasis_expspeed.rotate;
-		cm_motor.cm_temp4=chasis_expspeed.y-chasis_expspeed.x+chasis_expspeed.rotate;
-		if (RATE_DO_EXECUTE(RATE_50_HZ, GetSysTickCnt()))  //250hz
-			{
-						CurrentControl();
-			}
-		cm_motor.cm_out1=DJI_PID_Cal(&chasis_motor1_pid_v,chasis_motor[0].speed,cm_motor.cm_temp1,CHASIS_MOTOR_MAX_CURRENT+chasis_power_control.out);   //得到底盘
-		cm_motor.cm_out2=DJI_PID_Cal(&chasis_motor2_pid_v,chasis_motor[1].speed,cm_motor.cm_temp2,CHASIS_MOTOR_MAX_CURRENT+chasis_power_control.out);
-		cm_motor.cm_out3=DJI_PID_Cal(&chasis_motor3_pid_v,chasis_motor[2].speed,cm_motor.cm_temp3,CHASIS_MOTOR_MAX_CURRENT+chasis_power_control.out);
-		cm_motor.cm_out4=DJI_PID_Cal(&chasis_motor4_pid_v,chasis_motor[3].speed,cm_motor.cm_temp4,CHASIS_MOTOR_MAX_CURRENT+chasis_power_control.out);
-	
 		
-//		cm_motor.cm_out1=cm_motor.cm_out1-cm_motor.current_offset; //偏差清零
-//		cm_motor.cm_out2=cm_motor.cm_out2+cm_motor.current_offset; //偏差清零
-//		cm_motor.cm_out3=cm_motor.cm_out3-cm_motor.current_offset; //偏差清零
-//		cm_motor.cm_out4=cm_motor.cm_out4+cm_motor.current_offset; //偏差清零
+		chassis_vector_to_mecanum_wheel_speed(chasis_expspeed.x,chasis_expspeed.y,
+																					chasis_expspeed.rotate,cm_motor.cm_temp);//速度合成
 //	
-	
-		MotorSpeedAnalyze(&cm_motor.cm_out1,&cm_motor.cm_out2,&cm_motor.cm_out3,&cm_motor.cm_out4);//比列调整
-	  Set_CM_Speed(cm_motor.cm_out1,cm_motor.cm_out2,cm_motor.cm_out3,cm_motor.cm_out4);//发送电机电流
-	
-
+//		if (RATE_DO_EXECUTE(RATE_50_HZ, GetSysTickCnt()))  //250hz
+//			{
+//						CurrentControl();			
+//			}
+			
+//		chasis_expspeed.x=DJI_PID_Cal(&chasis_motor_power_pid,0,0,MAX_M3508_CURRENT);   //得到底盘
+		//cm_motor.cm_out[1]=DJI_PID_Cal(&chasis_motor2_pid_v,chasis_motor[1].speed,cm_motor.cm_temp[1],MAX_M3508_CURRENT);
+//		cm_motor.cm_out[2]=DJI_PID_Cal(&chasis_motor3_pid_v,chasis_motor[2].speed,cm_motor.cm_temp[2],MAX_M3508_CURRENT);
+//	cm_motor.cm_out[3]=DJI_PID_Cal(&sad,chasis_motor[3].speed,cm_motor.cm_temp[3],MAX_M3508_CURRENT);		
+//			
+			
+//		MotorSpeedAnalyze(cm_motor.cm_out);//比列调整
+////			
+	  Set_CM_Speed(cm_motor.cm_out[0],cm_motor.cm_out[1],cm_motor.cm_out[2],cm_motor.cm_out[3]);//发送电机电流
+		int b=PIDz_Calculate(&sadas,2,2);
 }
 
 /**
@@ -92,17 +85,31 @@ void CalChasisAndSend(void)
   * @param[in]     4个电机期望转速变量地址    
   * @retval       
   */		
-void MotorSpeedAnalyze(float* cm1,float *cm2,float *cm3,float *cm4)
+void MotorSpeedAnalyze(float *wheel_speed)
 {
-		float max_val=GetMax(*cm1,*cm2,*cm3,*cm4);
+		    //计算轮子控制最大速度，并限制其最大速度
+	 fp32  temp=0.0f,max_vector = 0.0f, vector_rate = 0.0f;
 	
-		if(max_val>CHASIS_MOTOR_MAX_SPEED)
-		{
-			*cm1-=max_val-CHASIS_MOTOR_MAX_SPEED;
-			*cm2-=max_val-CHASIS_MOTOR_MAX_SPEED;
-			*cm3-=max_val-CHASIS_MOTOR_MAX_SPEED;
-			*cm4-=max_val-CHASIS_MOTOR_MAX_SPEED;			
-		}
+    for (int i = 0; i < 4; i++)
+    {				
+        temp = fabs(wheel_speed[i]);
+        if (max_vector < temp)
+        {
+            max_vector = temp;
+        }
+    }
+
+    if (max_vector > MAX_WHEEL_SPEED)
+    {
+        vector_rate = MAX_WHEEL_SPEED / max_vector;
+        for (int i = 0; i < 4; i++)
+        {
+            wheel_speed[i] *= vector_rate;
+        }
+    }
+
+		
+		
 				
 }
 /**
@@ -130,4 +137,23 @@ void CurrentControl(void)
 	 }
 	 
 	 	first_order_filter_cali(&chasis_power_control, cm_motor.current_offset);
+}
+
+
+
+/**
+  * @brief    麦克纳姆轮速度分解  
+  * @author   蜗牛蜗牛跑
+  * @param[in]         
+  * @retval       
+  */
+
+
+static void chassis_vector_to_mecanum_wheel_speed(const fp32 vx_set, const fp32 vy_set, const fp32 wz_set, fp32 * wheel_speed)
+{
+    //旋转的时候， 由于云台靠前，所以是前面两轮 0 ，1 旋转的速度变慢， 后面两轮 2,3 旋转的速度变快
+    wheel_speed[0] = vx_set - vy_set + (CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+    wheel_speed[1] = vx_set + vy_set + (CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+    wheel_speed[2] = -vx_set - vy_set + (-CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+    wheel_speed[3] = -vx_set + vy_set + (-CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
 }

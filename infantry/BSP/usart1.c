@@ -4,7 +4,7 @@
 
 /*-----USART1_RX-----PB7----*/
 /*-DMA2_Stream5,DMA_Channel_4-*/
-#define DEATHVALE 70
+
 
 uint8_t _USART1_DMA_RX_BUF[3][BSP_USART1_DMA_RX_BUF_LEN];//定义双缓存buff
 cal_ch_t     cal_ch;
@@ -145,10 +145,10 @@ void ProcessRC(u8 *Data)
 		 RC_Ctl.mouse.press_l = Data[12]; //!< Mouse Left Is Press ?
 		 RC_Ctl.mouse.press_r = Data[13]; //!< Mouse Right Is Press ?
 		 RC_Ctl.key.v = Data[14] | (Data[15] << 8); //!< KeyBoard value
-		 cal_ch.ch0=DeathAreaProcess(&RC_Ctl.rc.ch0,DEATHVALE);
-		 cal_ch.ch1=DeathAreaProcess(&RC_Ctl.rc.ch1,DEATHVALE);
-		 cal_ch.ch2=DeathAreaProcess(&RC_Ctl.rc.ch2,DEATHVALE);
-		 cal_ch.ch3=DeathAreaProcess(&RC_Ctl.rc.ch3,DEATHVALE);
+		 cal_ch.ch0=DeathAreaProcess(&RC_Ctl.rc.ch0,RC_DEAD_BAND);  //死区处理
+		 cal_ch.ch1=DeathAreaProcess(&RC_Ctl.rc.ch1,RC_DEAD_BAND);
+		 cal_ch.ch2=DeathAreaProcess(&RC_Ctl.rc.ch2,RC_DEAD_BAND);
+		 cal_ch.ch3=DeathAreaProcess(&RC_Ctl.rc.ch3,RC_DEAD_BAND);
 		 KeyBoardProcess(&key_boad,RC_Ctl.key.v);	
 }
 

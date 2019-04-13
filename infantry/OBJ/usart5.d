@@ -75,7 +75,6 @@
 ..\obj\usart5.o: ..\RmLib\pid_regulator.h
 ..\obj\usart5.o: ..\BSP\PID.h
 ..\obj\usart5.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\usart5.o: ..\RmLib\fifo.h
 ..\obj\usart5.o: ..\TASK\AUX_task.h
 ..\obj\usart5.o: ..\TASK\GIMBAL_task.h
 ..\obj\usart5.o: ..\TASK\CHASIS_task.h
