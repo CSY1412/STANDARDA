@@ -45,7 +45,6 @@ void BspInit(void)
 	KEY_Init();
 	FlowLED(70);  //流水提示
 //	IWDG_Init();
-	
 }
 
 /**
@@ -56,8 +55,7 @@ void BspInit(void)
   */
 void ParamInit(void)
 {
-	DJI_PID_Param_Init();  //初始化大疆PID	结构体
-	
+
 	first_order_filter_init(&gesture_sensor_Gx,0.001f,0.02f);   //Gx数据滤波初始化
 	first_order_filter_init(&chassis_slow_set_vx,0.004f,CHASSIS_ACCEL_X_NUM);    //一阶低通滤波代替斜波作为底盘速度输入
 	first_order_filter_init(&chassis_slow_set_vy,0.004f,CHASSIS_ACCEL_Y_NUM);    
@@ -66,14 +64,13 @@ void ParamInit(void)
 	
 	USART5_FIFO_Init();//裁判系统fifo初始化
 	FirstFlashRead();//第一次FLSASH读取
-	
 	Rc_Init();//遥控器通道初始化
 	setSystemStat(preparing);  //准备状态
 	setChasisFollowStat(self_move);  //底盘不跟随
 	confirmGimabalMainStat(free_and_preparing);//云台释放掉
 	setControlMode(remote);  //设置为遥控状态
 	setFricmotorStat(off);  //关闭摩擦轮
-
+	BeepNumb(2);
 }
 
 
@@ -267,67 +264,6 @@ void ChangeNowYawAngleToExpangle(void)
 	 yawdata.yawexp=extend_angle.ecd_value; //保持原地	
 }
 
-/**
-  * @brief       PID装载
-  * @author      蜗牛蜗牛跑
-  * @param[in]   
-  * @param[in]         
-  * @retval      
-**/ 
-void PID_Load(void)
-{
-		chasis_motor1_pid_v.kp=flash_save_data_access.chasis_motor1.kp;
-		chasis_motor1_pid_v.ki=flash_save_data_access.chasis_motor1.ki;
-		chasis_motor1_pid_v.kd=flash_save_data_access.chasis_motor1.kd;
-	
-		chasis_motor2_pid_v.kp=flash_save_data_access.chasis_motor2.kp;
-		chasis_motor2_pid_v.ki=flash_save_data_access.chasis_motor2.ki;
-		chasis_motor2_pid_v.kd=flash_save_data_access.chasis_motor2.kd;
-		
-		chasis_motor3_pid_v.kp=flash_save_data_access.chasis_motor3.kp;
-		chasis_motor3_pid_v.ki=flash_save_data_access.chasis_motor3.ki;
-		chasis_motor3_pid_v.kd=flash_save_data_access.chasis_motor3.kd;
-	
-		chasis_motor4_pid_v.kp=flash_save_data_access.chasis_motor4.kp;
-		chasis_motor4_pid_v.ki=flash_save_data_access.chasis_motor4.ki;
-		chasis_motor4_pid_v.kd=flash_save_data_access.chasis_motor4.kd;
-
-		gimbal_pitch_pid_v.kp=flash_save_data_access.gimbal_pitch_v.kp;
-		gimbal_pitch_pid_v.ki=flash_save_data_access.gimbal_pitch_v.ki;
-		gimbal_pitch_pid_v.kd=flash_save_data_access.gimbal_pitch_v.kd;
-	
-		gimbal_pitch_pid_v.kp=flash_save_data_access.gimbal_pitch_v.kp;
-		gimbal_pitch_pid_v.ki=flash_save_data_access.gimbal_pitch_v.ki;
-		gimbal_pitch_pid_v.kd=flash_save_data_access.gimbal_pitch_v.kd;
-		
-		gimbal_pitch_pid_p.kp=flash_save_data_access.gimbal_pitch_p.kp;
-		gimbal_pitch_pid_p.ki=flash_save_data_access.gimbal_pitch_p.ki;
-		gimbal_pitch_pid_p.kd=flash_save_data_access.gimbal_pitch_p.kd;
-		
-		gimbal_yaw_pid_v.kp=flash_save_data_access.gimbal_yaw_v.kp;
-		gimbal_yaw_pid_v.ki=flash_save_data_access.gimbal_yaw_v.ki;
-		gimbal_yaw_pid_v.kd=flash_save_data_access.gimbal_yaw_v.kd;
-		
-		gimbal_yaw_pid_p.kp=flash_save_data_access.gimbal_yaw_p.kp;
-		gimbal_yaw_pid_p.ki=flash_save_data_access.gimbal_yaw_p.ki;
-		gimbal_yaw_pid_p.kd=flash_save_data_access.gimbal_yaw_p.kd;
-		
-		chasis_follow_pid_p.kp=flash_save_data_access.chasis_follow_p.kp;
-		chasis_follow_pid_p.ki=flash_save_data_access.chasis_follow_p.ki;
-		chasis_follow_pid_p.kd=flash_save_data_access.chasis_follow_p.kd;
-		
-		gimbal_pitch_slef_aim_pid.kp=flash_save_data_access.manifold_follow_y.kp;
-		gimbal_pitch_slef_aim_pid.ki=flash_save_data_access.manifold_follow_y.ki;
-		gimbal_pitch_slef_aim_pid.kd=flash_save_data_access.manifold_follow_y.kd;
-		
-		gimbal_yaw_slef_aim_pid.kp=flash_save_data_access.manifold_follow_x.kp;
-		gimbal_yaw_slef_aim_pid.ki=flash_save_data_access.manifold_follow_x.ki;
-		gimbal_yaw_slef_aim_pid.kd=flash_save_data_access.manifold_follow_x.kd;
-		
-		chasis_motor_power_pid.kp=flash_save_data_access.power_control.kp;
-		chasis_motor_power_pid.ki=flash_save_data_access.power_control.ki;
-		chasis_motor_power_pid.kd=flash_save_data_access.power_control.kd;
-}
 
 
 
@@ -358,15 +294,11 @@ void RecordGimbalZeroPosition(void)
 **/
 void FirstFlashRead(void)
 {
-	if(Data_Read())  //读取flash
+	if(!Data_Read())  //读取flash
 	{
-		 PID_Load();
-	}
-	else
-	{
-	  printf("PID数据出错！！！三秒钟后重启！！！\n");
+		printf("PID数据出错！！！三秒钟后重启！！！\n");
 		delay_ms(3000);
-		NVIC_SystemReset();	  //重启	
+  	NVIC_SystemReset();	  //重启	
 	}
 }
 

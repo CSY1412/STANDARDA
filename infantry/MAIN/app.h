@@ -39,7 +39,6 @@ float ProcessGimbalexp(float input,float max_offset);
 void IWDG_Init(void);
 void ChangeNowPitchAngleToExpangle(void);
 void ChangeNowYawAngleToExpangle(void);
-void PID_Load(void);
 void RecordGimbalZeroPosition(void);
 void FirstFlashRead(void);
 #endif

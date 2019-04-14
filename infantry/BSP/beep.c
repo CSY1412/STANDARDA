@@ -3,7 +3,6 @@
 //初始化PF8为输出口		    
 //BEEP IO初始化
 
-int beep_valu=0;
 
 void BEEP_Init(void)
 {   
@@ -23,7 +22,7 @@ void BEEP_Init(void)
 }
 
 
-
+int beep_valu=0;
 /**
   * @brief    蜂鸣器
   * @author   蜗牛蜗牛跑
@@ -51,7 +50,10 @@ void BeepOFF(void)
 		beep_valu=0;
 }
 
-
+void BeepNumb(int num)
+{
+	beep_valu=num*2;
+}
 
 
 

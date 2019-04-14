@@ -24,10 +24,7 @@ typedef __packed struct
 {
 	u8 password_first;
 	
-	save_pid chasis_motor1;
-	save_pid chasis_motor2;
-	save_pid chasis_motor3;
-	save_pid chasis_motor4;
+	save_pid chasis_motor[4];
 	save_pid gimbal_yaw_p;
 	save_pid gimbal_yaw_v;
 	save_pid gimbal_pitch_p;

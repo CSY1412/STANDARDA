@@ -11,6 +11,27 @@
 #include "task.h"
 #include "semphr.h"
 
+/*---------------32库头文件--------------*/
+#include "sys.h"
+#include "delay.h"
+#include "usart.h"
+
+/*---------------算法头文件--------------*/
+#include "app.h"
+#include "arm_math.h"
+#include "user_lib.h"
+#include "filter.h"
+#include "maths.h"
+#include "pid.h"
+#include <math.h>
+#include "stdio.h"
+#include "fifo.h"
+#include "filter.h"
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+
+
 /*---------------外设头文件--------------*/
 #include "led.h"
 #include "key.h"
@@ -26,19 +47,6 @@
 #include "beep.h"
 #include "timer3.h"
 #include "flash.h"
-/*---------------32库头文件--------------*/
-#include "sys.h"
-#include "delay.h"
-#include "usart.h"
-
-/*---------------算法头文件--------------*/
-#include "app.h"
-#include "user_lib.h"
-#include "pid_regulator.h"
-#include "PID.h"
-#include <math.h>
-#include "stdio.h"
-#include "fifo.h"
 
 
 /*---------------任务头文件--------------*/

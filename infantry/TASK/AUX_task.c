@@ -26,17 +26,22 @@ void AUX_task(void *pvParameters)
         vTaskDelayUntil(&lastWakeTime, F2T(RATE_1000_HZ));
         if (RATE_DO_EXECUTE(RATE_250_HZ, GetSysTickCnt()))  //250hz
         {
-            BeepAlam ();					
+            
+							
         }
 				
 				if (RATE_DO_EXECUTE(RATE_10_HZ, GetSysTickCnt()))  //иак╦бл╣ф
 				{
-						LightingGreenLED();				
+						LightingGreenLED();
+//						BeepON();					
+						BeepAlam();					
+										
 				}
 				
 				if (RATE_DO_EXECUTE(RATE_5_HZ, GetSysTickCnt()))
 				{
 						LEDAlam();
+				
 				}
 				
     }

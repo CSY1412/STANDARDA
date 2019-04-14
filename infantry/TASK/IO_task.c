@@ -169,23 +169,23 @@ void TopToBottomDataPPrcess(uint8_t *pData)
         return;
     }
     memcpy(&TopToBottomData,pData,sizeof(TopToBottomData_t));
-    flash_save_data_temp.chasis_motor1.kp = (float)TopToBottomData.PID_Data[0].P/100;
-    flash_save_data_temp.chasis_motor1.ki = (float)TopToBottomData.PID_Data[0].I/100;
-    flash_save_data_temp.chasis_motor1.kd = (float)TopToBottomData.PID_Data[0].D/100;
+    flash_save_data_temp.chasis_motor[0].kp = (float)TopToBottomData.PID_Data[0].P/100;
+    flash_save_data_temp.chasis_motor[0].ki = (float)TopToBottomData.PID_Data[0].I/100;
+    flash_save_data_temp.chasis_motor[0].kd = (float)TopToBottomData.PID_Data[0].D/100;
 		
-		flash_save_data_temp.chasis_motor2.kp = (float)TopToBottomData.PID_Data[1].P/100;
-    flash_save_data_temp.chasis_motor2.ki = (float)TopToBottomData.PID_Data[1].I/100;
-    flash_save_data_temp.chasis_motor2.kd = (float)TopToBottomData.PID_Data[1].D/100;
+		flash_save_data_temp.chasis_motor[1].kp = (float)TopToBottomData.PID_Data[1].P/100;
+    flash_save_data_temp.chasis_motor[1].ki = (float)TopToBottomData.PID_Data[1].I/100;
+    flash_save_data_temp.chasis_motor[1].kd = (float)TopToBottomData.PID_Data[1].D/100;
 
 		
-		flash_save_data_temp.chasis_motor3.kp = (float)TopToBottomData.PID_Data[2].P/100;
-    flash_save_data_temp.chasis_motor3.ki = (float)TopToBottomData.PID_Data[2].I/100;
-    flash_save_data_temp.chasis_motor3.kd = (float)TopToBottomData.PID_Data[2].D/100;
+		flash_save_data_temp.chasis_motor[2].kp = (float)TopToBottomData.PID_Data[2].P/100;
+    flash_save_data_temp.chasis_motor[2].ki = (float)TopToBottomData.PID_Data[2].I/100;
+    flash_save_data_temp.chasis_motor[2].kd = (float)TopToBottomData.PID_Data[2].D/100;
 
 				
-		flash_save_data_temp.chasis_motor4.kp = (float)TopToBottomData.PID_Data[3].P/100;
-    flash_save_data_temp.chasis_motor4.ki = (float)TopToBottomData.PID_Data[3].I/100;
-    flash_save_data_temp.chasis_motor4.kd = (float)TopToBottomData.PID_Data[3].D/100;
+		flash_save_data_temp.chasis_motor[3].kp = (float)TopToBottomData.PID_Data[3].P/100;
+    flash_save_data_temp.chasis_motor[3].ki = (float)TopToBottomData.PID_Data[3].I/100;
+    flash_save_data_temp.chasis_motor[3].kd = (float)TopToBottomData.PID_Data[3].D/100;
 		
 		
 		flash_save_data_temp.gimbal_pitch_v.kp = (float)TopToBottomData.PID_Data[4].P/100;
@@ -310,21 +310,21 @@ void Upload_task(void *pvParameters)
             UploadData.PID[i].I=i+1;
             UploadData.PID[i].D=i+2;
         }
-        UploadData.PID[0].P= flash_save_data_temp.chasis_motor1.kp*100;
-        UploadData.PID[0].I= flash_save_data_temp.chasis_motor1.ki*100;
-        UploadData.PID[0].D= flash_save_data_temp.chasis_motor1.kd*100;
+        UploadData.PID[0].P= flash_save_data_temp.chasis_motor[0].kp*100;
+        UploadData.PID[0].I= flash_save_data_temp.chasis_motor[0].ki*100;
+        UploadData.PID[0].D= flash_save_data_temp.chasis_motor[0].kd*100;
 
-        UploadData.PID[1].P= flash_save_data_temp.chasis_motor2.kp*100;
-        UploadData.PID[1].I= flash_save_data_temp.chasis_motor2.ki*100;
-        UploadData.PID[1].D= flash_save_data_temp.chasis_motor2.kd*100;
+        UploadData.PID[1].P= flash_save_data_temp.chasis_motor[1].kp*100;
+        UploadData.PID[1].I= flash_save_data_temp.chasis_motor[1].ki*100;
+        UploadData.PID[1].D= flash_save_data_temp.chasis_motor[1].kd*100;
 
-        UploadData.PID[2].P= flash_save_data_temp.chasis_motor3.kp*100;
-        UploadData.PID[2].I= flash_save_data_temp.chasis_motor3.ki*100;
-        UploadData.PID[2].D= flash_save_data_temp.chasis_motor3.kd*100;
+        UploadData.PID[2].P= flash_save_data_temp.chasis_motor[2].kp*100;
+        UploadData.PID[2].I= flash_save_data_temp.chasis_motor[2].ki*100;
+        UploadData.PID[2].D= flash_save_data_temp.chasis_motor[2].kd*100;
 				
-				UploadData.PID[3].P= flash_save_data_temp.chasis_motor4.kp*100;
-        UploadData.PID[3].I= flash_save_data_temp.chasis_motor4.ki*100;
-        UploadData.PID[3].D= flash_save_data_temp.chasis_motor4.kd*100;
+				UploadData.PID[3].P= flash_save_data_temp.chasis_motor[3].kp*100;
+        UploadData.PID[3].I= flash_save_data_temp.chasis_motor[3].ki*100;
+        UploadData.PID[3].D= flash_save_data_temp.chasis_motor[3].kd*100;
 				
 				
 				UploadData.PID[4].P= flash_save_data_temp.gimbal_pitch_v.kp*100;

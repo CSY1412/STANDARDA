@@ -220,7 +220,7 @@ void CAN2_RX0_IRQHandler(void)
   /****************************
 功能：      机械角矫正
 输入： 当前角度angle，初始化角度first_angle
-输出：以4096为中心的数，4096所在位置就是原本first_angle的位置
+输出：以0为中心的数，0所在位置就是原本first_angle的位置
 改动：输出角度进一步改为反向角度变化（抬头加，低头减）
 *****************************/ 
 s16 transe_angle(s16 angle,u16 first_angle)
@@ -232,7 +232,7 @@ s16 transe_angle(s16 angle,u16 first_angle)
 		angle=angle+8191;
 		if(angle>8191)
 		angle=angle-8191;
-		return angle-4096;	
+		return angle;	
 }
 
 /********************************************************************************
@@ -364,13 +364,13 @@ void Process3508Data(chasis_motor_t *motor, u8 *message)
 /**
   * @brief    6623电机数据处理
   * @author   蜗牛蜗牛跑
-  * @param[in]      
+  * @param[in]  角度范围  -180到180 面向电机顺时针    
   * @retval       
 */
 void Process6623Data(gimbal_motor_t* motor,u8 *message)
 {
 		motor->real_angle=message[0]<<8|message[1];
-		motor->cal_angle=(float)(360/8192)*transe_angle(motor->real_angle,flash_save_data_temp.gimbal_yaw_zero);  //矫正过后的机械角度
+		motor->cal_angle=-((float)transe_angle(motor->real_angle,flash_save_data_temp.gimbal_yaw_zero)-4096)*180/4096;  //矫正过后的机械角度
 		motor->last_angle=gimbal_motor->this_angle;
 		motor->this_angle=gimbal_motor->cal_angle;
 		motor->angle_speed=gimbal_motor->this_angle-gimbal_motor->last_angle;

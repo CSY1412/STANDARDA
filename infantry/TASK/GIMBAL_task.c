@@ -97,16 +97,16 @@ void GimbalCtl(void)
   */
 void FirstGimbalBack(void)    
 {
-			gimbal_back_yaw_pid_p.kp=0.7;
-			yawdata.yawtemp=-DJI_PID_Cal(&gimbal_back_yaw_pid_p,(gimbal_motor[0].cal_angle-4096),0,YAWBACKROTATESPEEDMAX);				
-			yawdata.yawout=-DJI_PID_Cal(&gimbal_yaw_pid_v,imu_data_access.Gyro.z,yawdata.yawtemp,GIMBAL6623_MOTOR_MAX_CURRENT);		
+//			gimbal_back_yaw_pid_p.kp=0.7;
+//			yawdata.yawtemp=-DJI_PID_Cal(&gimbal_back_yaw_pid_p,(gimbal_motor[0].cal_angle-4096),0,YAWBACKROTATESPEEDMAX);				
+//			yawdata.yawout=-DJI_PID_Cal(&gimbal_yaw_pid_v,imu_data_access.Gyro.z,yawdata.yawtemp,GIMBAL6623_MOTOR_MAX_CURRENT);		
 			pitchdata.pitchexp=0;  //计算期望
 			LimitAngle(&pitchdata.pitchexp);
 			
-//			pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_pid_p,gesture_data.Angle.Pitch,0,PITCHBACKROTATESPEEDMAX);
-			pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_pid_p,(float)(gimbal_motor[1].this_angle-4096),pitchdata.pitchexp,PITCHBACKROTATESPEEDMAX);
-			pitchdata.pitchout= DJI_PID_Cal(&gimbal_pitch_pid_v,imu_data_access.Gyro.x,pitchdata.pitchtemp,GIMBAL6623_MOTOR_MAX_CURRENT);
-	
+////			pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_pid_p,gesture_data.Angle.Pitch,0,PITCHBACKROTATESPEEDMAX);
+//			pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_pid_p,(float)(gimbal_motor[1].this_angle-4096),pitchdata.pitchexp,PITCHBACKROTATESPEEDMAX);
+//			pitchdata.pitchout= DJI_PID_Cal(&gimbal_pitch_pid_v,imu_data_access.Gyro.x,pitchdata.pitchtemp,GIMBAL6623_MOTOR_MAX_CURRENT);
+//	
 			Set_Gimbal_Current(-yawdata.yawout,-pitchdata.pitchout);
 	
 }
@@ -124,27 +124,28 @@ void GimbalNomalCtl(void)   //云台控制
 				yawdata.yawadd=fp32_constrain( (cal_ch.ch2-1024)*REMOTE_YAW_MOVE_SPEEDRATE,
 																			imu_data_access.Angle.expand_yaw-gimbal_motor[0].cal_angle-MAX_YAW_OFFSET_ANGLE,
 																			imu_data_access.Angle.expand_yaw+gimbal_motor[0].cal_angle+MAX_YAW_OFFSET_ANGLE);
-				yawdata.yawexp+=yawdata.yawadd;    //计算增量
-						
-				pitchdata.pitchadd=fp32_constrain( (cal_ch.ch3-1024)*REMOTE_PITCH_MOVE_SPEEDRATE,
-																						-gimbal_motor[1].cal_angle+PITCH_MIN,
-																						-gimbal_motor[1].cal_angle-PITCH_MAX);
 				
-				pitchdata.pitchexp-=pitchdata.pitchadd;	//计算增量	
+				yawdata.yawexp+=yawdata.yawadd;    //计算增量
+//						
+//				pitchdata.pitchadd=fp32_constrain( (cal_ch.ch3-1024)*REMOTE_PITCH_MOVE_SPEEDRATE,
+//																						-gimbal_motor[1].cal_angle+PITCH_MIN,
+//																						-gimbal_motor[1].cal_angle-PITCH_MAX);
+//				
+//				pitchdata.pitchexp-=pitchdata.pitchadd;	//计算增量	
 //				ProtectGimbal();//移位保护				
 			}
-				if(control_mode==keyboard)//鼠标键盘
-			{	
-				yawdata.yawadd=fp32_constrain( (RC_Ctl.mouse.x)*MOUSE_YAW_MOVE_SPEEDRATE,
-																			imu_data_access.Angle.expand_yaw-gimbal_motor[0].cal_angle-MAX_YAW_OFFSET_ANGLE,
-																			imu_data_access.Angle.expand_yaw+gimbal_motor[0].cal_angle+MAX_YAW_OFFSET_ANGLE);							
-				yawdata.yawexp+=yawdata.yawadd;  //
-							
-				pitchdata.pitchadd=fp32_constrain((RC_Ctl.mouse.y)*MOUSE_PITCH_MOVE_SPEEDRATE,
-																						-gimbal_motor[1].cal_angle+PITCH_MIN,
-																						-gimbal_motor[1].cal_angle-PITCH_MAX);
-				pitchdata.pitchexp-=pitchdata.pitchadd;	//计算增量			
-			}
+//				if(control_mode==keyboard)//鼠标键盘
+//			{	
+//				yawdata.yawadd=fp32_constrain( (RC_Ctl.mouse.x)*MOUSE_YAW_MOVE_SPEEDRATE,
+//																			imu_data_access.Angle.expand_yaw-gimbal_motor[0].cal_angle-MAX_YAW_OFFSET_ANGLE,
+//																			imu_data_access.Angle.expand_yaw+gimbal_motor[0].cal_angle+MAX_YAW_OFFSET_ANGLE);							
+//				yawdata.yawexp+=yawdata.yawadd;  //
+//							
+//				pitchdata.pitchadd=fp32_constrain((RC_Ctl.mouse.y)*MOUSE_PITCH_MOVE_SPEEDRATE,
+//																						-gimbal_motor[1].cal_angle+PITCH_MIN,
+//																						-gimbal_motor[1].cal_angle-PITCH_MAX);
+//				pitchdata.pitchexp-=pitchdata.pitchadd;	//计算增量			
+//			}
 		
 //			yawdata.yawtemp=DJI_PID_Cal(&gimbal_yaw_pid_p,extend_angle.ecd_value,yawdata.yawexp,YAW_ROTATE_SPEED_MAX);				
 //			yawdata.yawout=-DJI_PID_Cal(&gimbal_yaw_pid_v,imu_data_access.Gyro.z,yawdata.yawtemp,GIMBAL6623_MOTOR_MAX_CURRENT);		
@@ -153,7 +154,11 @@ void GimbalNomalCtl(void)   //云台控制
 //			pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_pid_p,(float)(gimbal_motor[1].this_angle-4096),pitchdata.pitchexp,PITCH_ROTATE_SPEED_MAX);
 //			pitchdata.pitchout= DJI_PID_Cal(&gimbal_pitch_pid_v,imu_data_access.Gyro.x,pitchdata.pitchtemp,GIMBAL6623_MOTOR_MAX_CURRENT);
 //	
-			Set_Gimbal_Current(-yawdata.yawout,-pitchdata.pitchout);
+			 
+			 yawdata.yawtemp=PID_Calc(&gimbal_position[0],imu_data_access.Angle.expand_yaw,pitchdata.pitchexp,YAW_ROTATE_SPEED_MAX);
+			 yawdata.yawout=PID_Calc(&gimbal_speed[0],imu_data_access.Gyro.z,yawdata.yawtemp,MAX_M6623_CURRENT);
+			
+			//Set_Gimbal_Current(yawdata.yawout,-pitchdata.pitchout);
 }
 
 
@@ -226,17 +231,17 @@ void ProtectGimbal(void)  //云台保护
 void GimbalQuickBack(void)    
 {
 		
-			gimbal_back_yaw_pid_p.kp=0.7;
-			yawdata.yawtemp=-DJI_PID_Cal(&gimbal_back_yaw_pid_p,(gimbal_motor[0].cal_angle-4096),0,YAWQUICKBACKROTATESPEEDMAX);				
-			yawdata.yawout=-DJI_PID_Cal(&gimbal_yaw_pid_v,imu_data_access.Gyro.z,yawdata.yawtemp,GIMBAL6623_MOTOR_MAX_CURRENT);		
+//			gimbal_back_yaw_pid_p.kp=0.7;
+//			yawdata.yawtemp=-DJI_PID_Cal(&gimbal_back_yaw_pid_p,(gimbal_motor[0].cal_angle-4096),0,YAWQUICKBACKROTATESPEEDMAX);				
+//			yawdata.yawout=-DJI_PID_Cal(&gimbal_yaw_pid_v,imu_data_access.Gyro.z,yawdata.yawtemp,GIMBAL6623_MOTOR_MAX_CURRENT);		
 			pitchdata.pitchexp=0;  
 			LimitAngle(&pitchdata.pitchexp);
 
 //			pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_pid_p,gesture_data.Angle.Pitch,0,PITCHQUICKBACKROTATESPEEDMAX);
 	
-			pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_pid_p,(float)(gimbal_motor[1].this_angle-4096),0,PITCHQUICKBACKROTATESPEEDMAX);
-			pitchdata.pitchout= DJI_PID_Cal(&gimbal_pitch_pid_v,imu_data_access.Gyro.x,pitchdata.pitchtemp,GIMBAL6623_MOTOR_MAX_CURRENT);
-	
+//			pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_pid_p,(float)(gimbal_motor[1].this_angle-4096),0,PITCHQUICKBACKROTATESPEEDMAX);
+//			pitchdata.pitchout= DJI_PID_Cal(&gimbal_pitch_pid_v,imu_data_access.Gyro.x,pitchdata.pitchtemp,GIMBAL6623_MOTOR_MAX_CURRENT);
+//	
 			Set_Gimbal_Current(-yawdata.yawout,-pitchdata.pitchout);
 }
 
@@ -278,13 +283,13 @@ void GimbalSlefaimCtl(void)
 			
 				if (RATE_DO_EXECUTE(RATE_100_HZ, GetSysTickCnt()))  //100hz
 			{		
-				pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_slef_aim_pid,manifold.y,0,PITCH_ROTATE_SPEED_MAX);
-				yawdata.yawtemp=DJI_PID_Cal(&gimbal_yaw_slef_aim_pid,manifold.x,0,YAW_ROTATE_SPEED_MAX);				
+//				pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_slef_aim_pid,manifold.y,0,PITCH_ROTATE_SPEED_MAX);
+//				yawdata.yawtemp=DJI_PID_Cal(&gimbal_yaw_slef_aim_pid,manifold.x,0,YAW_ROTATE_SPEED_MAX);				
 			}
 						
-			yawdata.yawout=-DJI_PID_Cal(&gimbal_yaw_pid_v,imu_data_access.Gyro.z,yawdata.yawtemp,GIMBAL6623_MOTOR_MAX_CURRENT);					
-			pitchdata.pitchout= DJI_PID_Cal(&gimbal_pitch_pid_v,imu_data_access.Gyro.x,pitchdata.pitchtemp,GIMBAL6623_MOTOR_MAX_CURRENT);
-	
+//			yawdata.yawout=-DJI_PID_Cal(&gimbal_yaw_pid_v,imu_data_access.Gyro.z,yawdata.yawtemp,GIMBAL6623_MOTOR_MAX_CURRENT);					
+//			pitchdata.pitchout= DJI_PID_Cal(&gimbal_pitch_pid_v,imu_data_access.Gyro.x,pitchdata.pitchtemp,GIMBAL6623_MOTOR_MAX_CURRENT);
+//	
 			Set_Gimbal_Current(-yawdata.yawout,-pitchdata.pitchout);
 			
 }

@@ -60,6 +60,7 @@ u8 Data_Read(void)
 		{
 		 memcpy(&flash_save_data_access,&flash_save_data_temp,sizeof(flash_save_data_t));
 		 printf("FLASH数据校验通过\n");
+	   allPIDInit();
 		}
 		else
 		{	
@@ -105,8 +106,8 @@ u8 Flash_Data_Save(void)
     FLASH_Lock();   //锁定flash
 		YellowLED(5);
 		memcpy(&flash_save_data_access,&flash_save_data_temp,sizeof(flash_save_data_t));
-		PID_Load();//PID装载
 		printf("flash写入完毕！！");
+		allPIDInit();
     return 1;
 }
 

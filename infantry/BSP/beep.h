@@ -8,7 +8,7 @@ void BEEP_Init(void);//≥ı ºªØ
 void BeepAlam(void);
 void BeepON(void);
 void BeepOFF(void);
-
+void BeepNumb(int num);
 
 #endif
 

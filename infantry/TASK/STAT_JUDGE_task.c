@@ -275,8 +275,10 @@ void JudgeCalibration(void)
 								if((GetSysTickCnt()-last_record_time)<3000) // 3秒内
 								{
 								    switch_counter=0; //计数置零
+										printf("进行一次校准P轴Y轴校准\n");
 										RecordGimbalZeroPosition();
-									  printf("进行一次校准P轴Y轴校准");
+										printf("校准完成！！！！\n");
+									 
 											//进行校准
 								}
 								else

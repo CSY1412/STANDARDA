@@ -25,7 +25,7 @@
 #define MAX_YAW_OFFSET_ANGLE 60   //云台yaw最大偏角
 #define PITCH_MAX 20.0f // 云台pitch最大    
 #define PITCH_MIN -20.0f  // 云台pitch最小   
-#define YAW_ROTATE_SPEED_MAX 200  //yaw旋转速度环最大值  
+#define YAW_ROTATE_SPEED_MAX 400  //yaw旋转速度环最大值  
 #define PITCH_ROTATE_SPEED_MAX 400  //pitch旋转速度环最大值   
 #define YAWBACKROTATESPEEDMAX 140  //yaw轴归位速度环最大
 #define PITCHBACKROTATESPEEDMAX 210//pitch轴归位速度环最大
@@ -38,7 +38,7 @@
 #define REMOTE_YAW_MOVE_SPEEDRATE 0.0005    //遥控器Y轴控制速率
 #define MOUSE_PITCH_MOVE_SPEEDRATE 0.12
 #define MOUSE_YAW_MOVE_SPEEDRATE 0.004
-
+#define MAX_M6623_CURRENT 5000
 /*------------------------------------系统配置--------------------------------*/
 #define DEBUG_CHASIS 0  
 #define DEBUG_GIMBAL 0 
@@ -52,11 +52,11 @@
 
 
 #define CHASSIS_ACCEL_X_NUM 0.0966666667f //一阶低通滤波系数
-#define CHASSIS_ACCEL_Y_NUM 0.07f
+#define CHASSIS_ACCEL_Y_NUM 0.03f   //0.07
 #define CHASSIS_ACCEL_QE_NUM 0.15f
 
-#define KEY_CHASSIS_SPEED_X 2.0f  //按键底盘运动过程最大平移速度
-#define KEY_CHASSIS_SPEED_Y 1.5f  //按键底盘运动过程最大前进速度
+#define KEY_CHASSIS_SPEED_X 1.5f  //按键底盘运动过程最大平移速度
+#define KEY_CHASSIS_SPEED_Y 2.2f  //按键底盘运动过程最大前进速度
 #define RC_CHASSIS_SPEED_X 1.5f  //遥控器底盘运动过程最大平移速度
 #define RC_CHASSIS_SPEED_Y 2.0f  //遥控器底盘运动过程最大前进速度
 #define SHIFT_CHASSIS_SPEED_Y 1.0f*MAX_M3508_SPEED  //底盘运动过程最大前进速度

@@ -59,24 +59,23 @@ void CONCLUDE_task(void *pvParameters)
 void CalChasisAndSend(void)  
 {
 		
-		chassis_vector_to_mecanum_wheel_speed(chasis_expspeed.x,chasis_expspeed.y,
-																					chasis_expspeed.rotate,cm_motor.cm_temp);//速度合成
+	
+	
+		chassis_vector_to_mecanum_wheel_speed(chasis_control.vx,chasis_control.vy,
+																					chasis_control.rotate,cm_motor.cm_temp);//速度合成
 //	
 //		if (RATE_DO_EXECUTE(RATE_50_HZ, GetSysTickCnt()))  //250hz
 //			{
 //						CurrentControl();			
 //			}
 			
-//		chasis_expspeed.x=DJI_PID_Cal(&chasis_motor_power_pid,0,0,MAX_M3508_CURRENT);   //得到底盘
-		//cm_motor.cm_out[1]=DJI_PID_Cal(&chasis_motor2_pid_v,chasis_motor[1].speed,cm_motor.cm_temp[1],MAX_M3508_CURRENT);
-//		cm_motor.cm_out[2]=DJI_PID_Cal(&chasis_motor3_pid_v,chasis_motor[2].speed,cm_motor.cm_temp[2],MAX_M3508_CURRENT);
-//	cm_motor.cm_out[3]=DJI_PID_Cal(&sad,chasis_motor[3].speed,cm_motor.cm_temp[3],MAX_M3508_CURRENT);		
-//			
-			
-//		MotorSpeedAnalyze(cm_motor.cm_out);//比列调整
-////			
+		for(int i =0;i<4;i++)
+	{
+		  cm_motor.cm_out[i]=	PID_Calc(&chassis_motor[i],chasis_motor[i].speed,cm_motor.cm_temp[i],MAX_M3508_CURRENT);
+	}	
+
+		
 	  Set_CM_Speed(cm_motor.cm_out[0],cm_motor.cm_out[1],cm_motor.cm_out[2],cm_motor.cm_out[3]);//发送电机电流
-		int b=PIDz_Calculate(&sadas,2,2);
 }
 
 /**
@@ -124,8 +123,8 @@ void CurrentControl(void)
 {
 		if(judge_rece_mesg.power_heatdata.chassisPower>MAX_CHASIS_POWER)  //当功率超过最大功率时
 	 {
-	    cm_motor.current_offset=DJI_PID_Cal(&chasis_motor_power_pid,judge_rece_mesg.power_heatdata.chassisPower,
-																								MAX_CHASIS_POWER,7000);
+//	    cm_motor.current_offset=DJI_PID_Cal(&chasis_motor_power_pid,judge_rece_mesg.power_heatdata.chassisPower,
+//																								MAX_CHASIS_POWER,7000);
 	
 		 if(cm_motor.current_offset>0)
 				 cm_motor.current_offset=0;
@@ -152,8 +151,8 @@ void CurrentControl(void)
 static void chassis_vector_to_mecanum_wheel_speed(const fp32 vx_set, const fp32 vy_set, const fp32 wz_set, fp32 * wheel_speed)
 {
     //旋转的时候， 由于云台靠前，所以是前面两轮 0 ，1 旋转的速度变慢， 后面两轮 2,3 旋转的速度变快
-    wheel_speed[0] = vx_set - vy_set + (CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
-    wheel_speed[1] = vx_set + vy_set + (CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
-    wheel_speed[2] = -vx_set - vy_set + (-CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
-    wheel_speed[3] = -vx_set + vy_set + (-CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+    wheel_speed[0] = vx_set + vy_set + (CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+    wheel_speed[1] = vx_set - vy_set + (CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+    wheel_speed[2] = -vx_set + vy_set + (-CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+    wheel_speed[3] = -vx_set - vy_set + (-CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
 }

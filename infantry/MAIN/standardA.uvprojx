@@ -138,7 +138,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\SYSTEM\delay;..\SYSTEM\sys;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM4F;..\HARDWARE;..\TASK;..\SYSTEM\usart;..\BSP;..\CMSIS\inc;..\SYSTEM;..\MAIN;..\RmLib</IncludePath>
+              <IncludePath>..\SYSTEM\delay;..\SYSTEM\sys;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM4F;..\HARDWARE;..\TASK;..\SYSTEM\usart;..\BSP;..\CMSIS\inc;..\SYSTEM;..\MAIN;..\RmLib;..\DSP\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -483,11 +483,6 @@
               <FilePath>..\BSP\led.c</FilePath>
             </File>
             <File>
-              <FileName>pid.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\pid.c</FilePath>
-            </File>
-            <File>
               <FileName>timer3.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\timer3.c</FilePath>
@@ -561,6 +556,21 @@
               <FileName>common.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\RmLib\common.h</FilePath>
+            </File>
+            <File>
+              <FileName>filter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\RmLib\filter.c</FilePath>
+            </File>
+            <File>
+              <FileName>maths.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\RmLib\maths.c</FilePath>
+            </File>
+            <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\RmLib\pid.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -696,6 +706,16 @@
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FreeRTOS\portable\MemMang\heap_4.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_cortexM4lf_math.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\DSP\arm_cortexM4lf_math.lib</FilePath>
             </File>
           </Files>
         </Group>

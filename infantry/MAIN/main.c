@@ -43,7 +43,7 @@ void start_task(void *pvParameters)
 {
     taskENTER_CRITICAL();           //进入临界区
 		
-   xTaskCreate(STAT_JUDGE_task,"STAT_JUDGE_task",128,NULL,17,&STAT_JUDGETask_Handler);  //状态机
+    xTaskCreate(STAT_JUDGE_task,"STAT_JUDGE_task",128,NULL,17,&STAT_JUDGETask_Handler);  //状态机
     xTaskCreate(CHASIS_task,"CHASIS_task",128,NULL,19,&CHASISTask_Handler);    //底盘任务
     xTaskCreate(GIMBAL_task,"GIMBAL_task",128,NULL,20,&GIMBALTask_Handler);  //云台任务
     xTaskCreate(CONCLUDE_task,"CONCLUDE_task",1024,NULL,21,&CONCLUDETask_Handler); //底盘速度总结
