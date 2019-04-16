@@ -704,7 +704,7 @@ I (..\TASK\DETECTION_task.h)(0x5CB01732)
 I (..\TASK\IO_Task.h)(0x5CB01732)
 I (..\TASK\CONFIG_PARAM_task.h)(0x5CB01732)
 I (..\TASK\REFERENCE_task.h)(0x5CB01732)
-F (..\TASK\GIMBAL_task.c)(0x5CB31FE7)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -W -O0 --apcs=interwork --split_sections -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\HARDWARE -I ..\TASK -I ..\SYSTEM\usart -I ..\BSP -I ..\CMSIS\inc -I ..\SYSTEM -I ..\MAIN -I ..\RmLib -I ..\DSP\Include-I.\RTE\_RM2019_STANDARD-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="527" -DSTM32F40_41xxx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\gimbal_task.o --omf_browse ..\obj\gimbal_task.crf --depend ..\obj\gimbal_task.d)
+F (..\TASK\GIMBAL_task.c)(0x5CB3208B)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -W -O0 --apcs=interwork --split_sections -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\FreeRTOS\include -I ..\FreeRTOS\portable\RVDS\ARM_CM4F -I ..\HARDWARE -I ..\TASK -I ..\SYSTEM\usart -I ..\BSP -I ..\CMSIS\inc -I ..\SYSTEM -I ..\MAIN -I ..\RmLib -I ..\DSP\Include-I.\RTE\_RM2019_STANDARD-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="527" -DSTM32F40_41xxx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\gimbal_task.o --omf_browse ..\obj\gimbal_task.crf --depend ..\obj\gimbal_task.d)
 I (..\TASK\GIMBAL_task.h)(0x5CB1C686)
 I (..\MAIN\main.h)(0x5CB2C0C5)
 I (..\MAIN\config.h)(0x5CB31E2E)
