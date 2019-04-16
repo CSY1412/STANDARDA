@@ -45,6 +45,8 @@ void BspInit(void)
 	KEY_Init();
 	FlowLED(70);  //流水提示
 //	IWDG_Init();
+	
+	
 }
 
 /**
@@ -167,54 +169,6 @@ float GetMax(float a,float b,float c,float d)
 }
 
 
-
-///**
-//  * @brief       处理yaw轴期望并且限制
-//  * @author      蜗牛蜗牛跑
-//  * @param[in]   
-//  * @param[in]         
-//  * @retval      
-//**/
-//float ProcessGimbalexp(float input,float max_offset)
-//{
-//		_Bool allow_increase = 0;   //允许增减标志
-//		_Bool allow_decrease = 0;
-
-//		
-//		 if(gimbal_motor[0].cal_angle-4096<-max_offset)
-//		{
-//				allow_increase=0;    //不允许增加
-//				allow_decrease=1;		 //允许减少
-//		}
-//		else if(gimbal_motor[0].cal_angle-4096>max_offset)
-//		{
-//				allow_increase=1;    //允许增加
-//				allow_decrease=0;		 //不允许减少
-//		}	
-//		else
-//		{
-//				allow_increase=1;    //允许增加
-//				allow_decrease=1;		 //允许减少
-//		}
-//		
-//		if(allow_increase==1&&allow_decrease==0)  //如果只允许增加
-//		{
-//				if(input<0)
-//				{
-//						input=0;
-//				}		
-//		}	
-//		if(allow_increase==0&&allow_decrease==1)  //如果只允许增加
-//		{
-//				if(input>0)
-//				{
-//						input=0;
-//				}		
-//		}
-//		
-//		return input;
-
-//}
 
 
 /**

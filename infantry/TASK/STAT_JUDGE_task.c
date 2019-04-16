@@ -67,14 +67,12 @@ void JudgeSystemStat(void)
 {		
 		if(last_key_valu.s2==1&&this_key_valu.s2==3) //从上拨到中
 		{
-			system_stat=running;  //系统配置为运行模式
-			gimabal_main_stat=control;//云台主状态
-			//gimabal_aux_mode=slowing;
-			gimabal_aux_mode=normal;		
-			chasis_follow_stat=self_move;//不跟随
-			
+			setSystemStat(running);  //系统配置为运行模式
+			setGimabalMainStat(control);//云台主状态
+			setGimabalAuxMode(slowing);
+			setChasisFollowStat(self_move);//不跟随
 			last_back_time = GetSysTickCnt();  //获取系统时间
-//			printf("运行模式\n");			
+			printf("运行模式\n");			
 		}
 		if((slef_check_count.stat&&0x0080!=0)&&this_key_valu.s2==3)  //处于运行模式并且丢失遥控信号
 		{

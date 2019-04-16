@@ -21,6 +21,9 @@ PidTypeDef chassis_motor[4];  //底盘电机
 PidTypeDef gimbal_speed[2];
 PidTypeDef gimbal_position[2];
 PidTypeDef chasis_follow;
+PidTypeDef gimbal_back_yaw_pid_p;  //云台归位yaw
+PidTypeDef gimbal_back_pitch_pid_p;//云台归位pitch
+
 
 #define LimitMax(input, max)   \
     {                          \
@@ -122,4 +125,16 @@ void allPIDInit(void)
 													 flash_save_data_access.gimbal_pitch_p.ki,
 													 flash_save_data_access.gimbal_pitch_p.kd,
 													 YAW_ROTATE_SPEED_MAX,YAW_ROTATE_SPEED_MAX/5);
+	 PID_Init(&chasis_follow,PID_POSITION,flash_save_data_access.chasis_follow_p.kp,
+																				 flash_save_data_access.chasis_follow_p.ki,
+																				 flash_save_data_access.chasis_follow_p.kd,
+																			   CHASIS_FOLLOW_ROATE_SPEED_MAX,CHASIS_FOLLOW_ROATE_SPEED_MAX/5);
+	 PID_Init(&gimbal_back_yaw_pid_p,PID_POSITION,GIMBAL_YAW_BACK_KP,
+																				 0,
+																				 0,
+																			   YAW_BACK_ROTATE_SPEED_MAX,YAW_BACK_ROTATE_SPEED_MAX/5);
+	 PID_Init(&gimbal_back_pitch_pid_p,PID_POSITION,GIMBAL_PITCH_BACK_KP,
+																				 0,
+																				 0,
+																			   PITCH_BACK_ROTATE_SPEED_MAX,PITCH_BACK_ROTATE_SPEED_MAX/5);
 }

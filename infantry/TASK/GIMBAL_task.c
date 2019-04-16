@@ -97,17 +97,18 @@ void GimbalCtl(void)
   */
 void FirstGimbalBack(void)    
 {
-//			gimbal_back_yaw_pid_p.kp=0.7;
-//			yawdata.yawtemp=-DJI_PID_Cal(&gimbal_back_yaw_pid_p,(gimbal_motor[0].cal_angle-4096),0,YAWBACKROTATESPEEDMAX);				
+	
+			yawdata.yawtemp=PID_Calc(&gimbal_back_yaw_pid_p,gimbal_motor[0].cal_angle,0,YAW_BACK_ROTATE_SPEED_MAX);
+			yawdata.yawout=PID_Calc(&gimbal_speed[0],imu_data_access.Gyro.z,yawdata.yawtemp,MAX_M6623_CURRENT);	
 //			yawdata.yawout=-DJI_PID_Cal(&gimbal_yaw_pid_v,imu_data_access.Gyro.z,yawdata.yawtemp,GIMBAL6623_MOTOR_MAX_CURRENT);		
-			pitchdata.pitchexp=0;  //计算期望
-			LimitAngle(&pitchdata.pitchexp);
+//			pitchdata.pitchexp=0;  //计算期望
+//			LimitAngle(&pitchdata.pitchexp);
 			
 ////			pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_pid_p,gesture_data.Angle.Pitch,0,PITCHBACKROTATESPEEDMAX);
 //			pitchdata.pitchtemp=DJI_PID_Cal(&gimbal_pitch_pid_p,(float)(gimbal_motor[1].this_angle-4096),pitchdata.pitchexp,PITCHBACKROTATESPEEDMAX);
 //			pitchdata.pitchout= DJI_PID_Cal(&gimbal_pitch_pid_v,imu_data_access.Gyro.x,pitchdata.pitchtemp,GIMBAL6623_MOTOR_MAX_CURRENT);
 //	
-			Set_Gimbal_Current(-yawdata.yawout,-pitchdata.pitchout);
+			Set_Gimbal_Current(yawdata.yawout,-pitchdata.pitchout);
 	
 }
 
@@ -121,17 +122,12 @@ void GimbalNomalCtl(void)   //云台控制
 {
 			if(control_mode==remote)//遥控模式
 			{							
-				yawdata.yawadd=fp32_constrain( (cal_ch.ch2-1024)*REMOTE_YAW_MOVE_SPEEDRATE,
-																			imu_data_access.Angle.expand_yaw-gimbal_motor[0].cal_angle-MAX_YAW_OFFSET_ANGLE,
-																			imu_data_access.Angle.expand_yaw+gimbal_motor[0].cal_angle+MAX_YAW_OFFSET_ANGLE);
 				
-				yawdata.yawexp+=yawdata.yawadd;    //计算增量
-//						
-//				pitchdata.pitchadd=fp32_constrain( (cal_ch.ch3-1024)*REMOTE_PITCH_MOVE_SPEEDRATE,
-//																						-gimbal_motor[1].cal_angle+PITCH_MIN,
-//																						-gimbal_motor[1].cal_angle-PITCH_MAX);
-//				
-//				pitchdata.pitchexp-=pitchdata.pitchadd;	//计算增量	
+				yawdata.yawexp+=(cal_ch.ch2-1024)*REMOTE_YAW_MOVE_SPEEDRATE;
+				yawdata.yawexp=fp32_constrain(yawdata.yawexp,
+																			-MAX_YAW_OFFSET_ANGLE-gimbal_motor[0].cal_angle+imu_data_access.Angle.expand_yaw,
+																			MAX_YAW_OFFSET_ANGLE-gimbal_motor[0].cal_angle+imu_data_access.Angle.expand_yaw);				
+
 //				ProtectGimbal();//移位保护				
 			}
 //				if(control_mode==keyboard)//鼠标键盘
@@ -155,10 +151,12 @@ void GimbalNomalCtl(void)   //云台控制
 //			pitchdata.pitchout= DJI_PID_Cal(&gimbal_pitch_pid_v,imu_data_access.Gyro.x,pitchdata.pitchtemp,GIMBAL6623_MOTOR_MAX_CURRENT);
 //	
 			 
-			 yawdata.yawtemp=PID_Calc(&gimbal_position[0],imu_data_access.Angle.expand_yaw,pitchdata.pitchexp,YAW_ROTATE_SPEED_MAX);
+			 
+			 
+			 yawdata.yawtemp=PID_Calc(&gimbal_position[0],imu_data_access.Angle.expand_yaw,yawdata.yawexp,YAW_ROTATE_SPEED_MAX);
 			 yawdata.yawout=PID_Calc(&gimbal_speed[0],imu_data_access.Gyro.z,yawdata.yawtemp,MAX_M6623_CURRENT);
 			
-			//Set_Gimbal_Current(yawdata.yawout,-pitchdata.pitchout);
+			 Set_Gimbal_Current(yawdata.yawout,-pitchdata.pitchout);
 }
 
 
@@ -257,7 +255,7 @@ void GimbalQuickBack(void)
 void CheckUpQuickBackFinishi(void)
 {
 		u32 nowtime = GetSysTickCnt();  //获取系统时间
-		if(nowtime-last_back_time>QUICKBACKTIME)
+		if(nowtime-last_back_time>SLOWLING_BACK_TIME)
 		{
 			yawdata.yawexp=extend_angle.ecd_value; //保持原地
 //			pitchdata.pitchexp=gesture_data.Angle.Pitch; //保持原地

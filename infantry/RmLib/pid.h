@@ -51,6 +51,10 @@ extern PidTypeDef chassis_motor[4];  //底盘路电机
 extern PidTypeDef gimbal_speed[2];
 extern PidTypeDef gimbal_position[2];
 extern PidTypeDef chasis_follow;
+extern PidTypeDef gimbal_back_yaw_pid_p;  //云台归位yaw
+extern PidTypeDef gimbal_back_pitch_pid_p;//云台归位pitch
+
+
 void PID_Init(PidTypeDef *pid, uint8_t mode,fp32 kp,fp32 ki,fp32 kd, fp32 max_out, fp32 max_iout);
 fp32 PID_Calc(PidTypeDef *pid, fp32 ref, fp32 set,float outmax);
 void PID_clear(PidTypeDef *pid);

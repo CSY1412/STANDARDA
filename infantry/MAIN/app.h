@@ -35,7 +35,6 @@ void ParamInit(void);
 void PrintTaskInfomation(char * name);
 void ExtendAngle(volatile extend_angle_t *v, float raw_angle);
 float GetMax(float a,float b,float c,float d);
-float ProcessGimbalexp(float input,float max_offset);
 void IWDG_Init(void);
 void ChangeNowPitchAngleToExpangle(void);
 void ChangeNowYawAngleToExpangle(void);

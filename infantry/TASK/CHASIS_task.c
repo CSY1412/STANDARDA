@@ -178,10 +178,10 @@ void ChasisRoteCal(void)
 		{
 			chasis_follow_ecd_exp=0;
 			first_order_filter_cali(&chassis_follow_QE,chasis_follow_ecd_exp);	
-//			chasis_expspeed.rotate=DJI_PID_Cal(&chasis_follow_pid_p,(gimbal_motor[0].cal_angle-4096),chassis_follow_QE.out,CHASIS_FOLLOW_ROATE_SPEED_MAX);  //电机中间值			
+			chasis_control.rotate=PID_Calc(&chasis_follow,gimbal_motor[0].cal_angle,chassis_follow_QE.out,CHASIS_FOLLOW_ROATE_SPEED_MAX);  //电机中间值			
 		}
 		
-		chasisSwingcontrol(&chasis_control.swing_angle);	
+	//	chasisSwingcontrol(&chasis_control.swing_angle);	
 
 		
 				
