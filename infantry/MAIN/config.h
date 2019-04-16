@@ -2,16 +2,6 @@
 #define __CONFIG_H
 
 
-
-
-
-
-
-
-#define MAX_CHASIS_FOLLOW_ECD 1200;  //QE时最大偏角
-#define QE_ROATE_SPEED_MAX 3500   //QE旋转速率最大
-
-
 /*------------------------------------射击配置--------------------------------*/
 #define KEEP_SHOOT_JUDGE_TIME 230  //判断进入连射模式的延时
 #define ONE_BULLET_SHOOT_TIME 230  //一颗子弹的运动延时
@@ -36,7 +26,7 @@
 #define REMOTE_PITCH_MOVE_SPEEDRATE 0.01  //遥控器P轴控制速率
 #define REMOTE_YAW_MOVE_SPEEDRATE 0.0005    //遥控器Y轴控制速率
 #define MOUSE_PITCH_MOVE_SPEEDRATE 0.12
-#define MOUSE_YAW_MOVE_SPEEDRATE 0.004
+#define MOUSE_YAW_MOVE_SPEEDRATE 0.008
 #define MAX_M6623_CURRENT 5000
 /*------------------------------------系统配置--------------------------------*/
 #define DEBUG_CHASIS 0  
@@ -51,16 +41,20 @@
 
 
 #define CHASSIS_ACCEL_X_NUM 0.0966666667f //一阶低通滤波系数
-#define CHASSIS_ACCEL_Y_NUM 0.03f   //0.07
-#define CHASSIS_ACCEL_QE_NUM 0.15f
+#define CHASSIS_ACCEL_Y_NUM 0.06f   //0.07
+#define CHASSIS_ACCEL_QE_NUM 0.09f
 
-#define KEY_CHASSIS_SPEED_X 1.5f  //按键底盘运动过程最大平移速度
-#define KEY_CHASSIS_SPEED_Y 2.2f  //按键底盘运动过程最大前进速度
+#define KEY_CHASSIS_SPEED_X 1.2f  //按键底盘运动过程最大平移速度
+#define KEY_CHASSIS_SPEED_Y 1.5f  //按键底盘运动过程最大前进速度
 #define RC_CHASSIS_SPEED_X 1.5f  //遥控器底盘运动过程最大平移速度
 #define RC_CHASSIS_SPEED_Y 2.0f  //遥控器底盘运动过程最大前进速度
 #define SHIFT_CHASSIS_SPEED_Y 1.0f*MAX_M3508_SPEED  //底盘运动过程最大前进速度
 #define CHASIS_FOLLOW_ROATE_SPEED_MAX 11  //底盘跟随时的最大旋转速率
-
+#define SWING_NO_MOVE_ANGLE 62.0f  //摇摆原地不动摇摆最大角度(rad)
+#define SWING_MOVE_ANGLE 30.0f  //摇摆过程底盘运动最大角度(rad)
+#define WING_SPEED PI/120   //摆尾速度
+#define MAX_CHASIS_FOLLOW_ECD 47;  //QE时最大偏角
+#define QE_ROATE_SPEED_MAX 3500   //QE旋转速率最大
 
 
 

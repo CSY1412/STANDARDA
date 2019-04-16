@@ -13,7 +13,7 @@ typedef __packed struct
     fp32 frame_period; //时间间隔
 } ramp_function_source_t;
 
-typedef __packed struct
+typedef  struct
 {
     fp32 input;        //输入数据
     fp32 out;          //滤波输出的数据

@@ -164,39 +164,21 @@ void ChasisRoteCal(void)
 {
 	if(key_boad.key_Q==PRESS&&key_boad.key_E==DISSPRESS)
 		{
-			chasis_follow_ecd_exp=-MAX_CHASIS_FOLLOW_ECD;
-			first_order_filter_cali(&chassis_follow_QE,chasis_follow_ecd_exp);	
-//			chasis_expspeed.rotate=DJI_PID_Cal(&chasis_follow_pid_p,(gimbal_motor[0].cal_angle-4096),chassis_follow_QE.out,QE_ROATE_SPEED_MAX);  //电机中间值
+			chasis_follow_ecd_exp=-MAX_CHASIS_FOLLOW_ECD; 
 		}
 		else if(key_boad.key_Q==DISSPRESS&&key_boad.key_E==PRESS)
 		{
-			chasis_follow_ecd_exp=MAX_CHASIS_FOLLOW_ECD;
-			first_order_filter_cali(&chassis_follow_QE,chasis_follow_ecd_exp);	
-//			chasis_expspeed.rotate=DJI_PID_Cal(&chasis_follow_pid_p,(gimbal_motor[0].cal_angle-4096),chassis_follow_QE.out,QE_ROATE_SPEED_MAX);  //电机中间值			
+			chasis_follow_ecd_exp=MAX_CHASIS_FOLLOW_ECD;		
 		}
 		else
-		{
-			chasis_follow_ecd_exp=0;
-			first_order_filter_cali(&chassis_follow_QE,chasis_follow_ecd_exp);	
-			chasis_control.rotate=PID_Calc(&chasis_follow,gimbal_motor[0].cal_angle,chassis_follow_QE.out,CHASIS_FOLLOW_ROATE_SPEED_MAX);  //电机中间值			
+		{			
+		  chasisSwingcontrol(&chassis_follow_QE.out);				
 		}
-		
-	//	chasisSwingcontrol(&chasis_control.swing_angle);	
+		 first_order_filter_cali(&chassis_follow_QE,chasis_follow_ecd_exp);		
 
-		
+		 chasis_control.rotate=PID_Calc(&chasis_follow,gimbal_motor[0].cal_angle,chassis_follow_QE.out,CHASIS_FOLLOW_ROATE_SPEED_MAX);  //电机中间值			
 				
 }
-
-
-
-
-
-
-
-//摇摆原地不动摇摆最大角度(rad)
-#define SWING_NO_MOVE_ANGLE 0.7f
-//摇摆过程底盘运动最大角度(rad)
-#define SWING_MOVE_ANGLE 0.31415926535897932384626433832795f
 
 
 /**
@@ -216,7 +198,7 @@ void chasisSwingcontrol(fp32 *angle_set)
     //max_angle 是sin函数的幅值
     static fp32 max_angle = SWING_NO_MOVE_ANGLE;
     //add_time 是摇摆角度改变的快慢，最大越快
-    static fp32 const add_time = PI / 250.0f;
+    static fp32 const add_time = WING_SPEED;
     //使能摇摆标志位
     static uint8_t swing_flag = 0;
 	
@@ -263,25 +245,4 @@ void chasisSwingcontrol(fp32 *angle_set)
 }
 
 
-//设置遥控器输入控制量
-void chassis_set_contorl()
-{
-    //设置速度
-  fp32 vx_set = 0.0f, vy_set = 0.0f, angle_set = 0.0f; 
-	fp32 sin_yaw = 0.0f, cos_yaw = 0.0f;
-	//旋转控制底盘速度方向，保证前进方向是云台方向，有利于运动平稳
-	sin_yaw = arm_sin_f32(-gimbal_motor[0].cal_angle);
-	cos_yaw = arm_cos_f32(-gimbal_motor[0].cal_angle);
-	vx_set = cos_yaw * vx_set + sin_yaw * vy_set;
-	vy_set = -sin_yaw * vx_set + cos_yaw * vy_set;
-//	//设置控制相对云台角度
-//	chassis_move_control->chassis_relative_angle_set = rad_format(angle_set);
-//	//计算旋转PID角速度
-//	chassis_move_control->wz_set = -PID_Calc(&chassis_move_control->chassis_angle_pid, chassis_move_control->chassis_yaw_motor->relative_angle, chassis_move_control->chassis_relative_angle_set);
-//	//速度限幅
-//	chassis_move_control->vx_set = fp32_constrain(chassis_move_control->vx_set, chassis_move_control->vx_min_speed, chassis_move_control->vx_max_speed);
-//	chassis_move_control->vy_set = fp32_constrain(chassis_move_control->vy_set, chassis_move_control->vy_min_speed, chassis_move_control->vy_max_speed);
 
-
-
-}

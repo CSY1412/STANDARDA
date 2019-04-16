@@ -17,7 +17,7 @@
   */
 
 #include "CONCLUDE_task.h"
-
+#include "math.h"
 cm_motor_t cm_motor;
 
 
@@ -59,15 +59,10 @@ void CONCLUDE_task(void *pvParameters)
 void CalChasisAndSend(void)  
 {
 		
+	 chassis_set_contorl(&chasis_control.vx,&chasis_control.vy,gimbal_motor[0].cal_angle);
 	
-	
-		chassis_vector_to_mecanum_wheel_speed(chasis_control.vx,chasis_control.vy,
+	 chassis_vector_to_mecanum_wheel_speed(chasis_control.vx,chasis_control.vy,
 																					chasis_control.rotate,cm_motor.cm_temp);//速度合成
-//	
-//		if (RATE_DO_EXECUTE(RATE_50_HZ, GetSysTickCnt()))  //250hz
-//			{
-//						CurrentControl();			
-//			}
 			
 		for(int i =0;i<4;i++)
 	{
@@ -155,4 +150,31 @@ static void chassis_vector_to_mecanum_wheel_speed(const fp32 vx_set, const fp32 
     wheel_speed[1] = vx_set - vy_set + (CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
     wheel_speed[2] = -vx_set + vy_set +(-CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
     wheel_speed[3] = -vx_set - vy_set +(-CHASSIS_ROATE_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+}
+
+
+/**
+  * @brief    弧度转换 
+  * @author   小技师
+  * @param[in]         
+  * @retval       
+  */
+static float rad(float input)
+{
+	return input*PI/180.0f;
+}
+
+/**
+  * @brief    坐标系转换 
+  * @author   小技师
+  * @param[in]         
+  * @retval       
+  */
+void chassis_set_contorl(float *exp_vx,float *exp_vy,float econder_angle)
+{
+		float x = *exp_vx;
+		float y = *exp_vy;
+
+			*exp_vx = y * sin(rad(econder_angle)) + x * cos(rad(econder_angle));
+	    *exp_vy = y * cos(rad(econder_angle)) - x * sin(rad(econder_angle));
 }

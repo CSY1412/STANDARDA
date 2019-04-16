@@ -272,7 +272,7 @@ void Upload_task(void *pvParameters)
         UploadData.WaveData[0] = judge_rece_mesg.power_heatdata.chassisPower;
         UploadData.WaveData[1] = cm_motor.current_offset;
         UploadData.WaveData[2] = judge_rece_mesg.power_heatdata.chassisBuffer;
-        UploadData.WaveData[3] = 0;
+        UploadData.WaveData[3] = gimbal_motor[0].cal_angle;
         UploadData.WaveData[4] = 0;                     //电机期望
         UploadData.WaveData[5] = chasis_motor[0].speed; //电机速度
         UploadData.WaveData[6] = imu_data_access.Angle.yaw;

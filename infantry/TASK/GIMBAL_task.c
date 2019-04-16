@@ -130,8 +130,8 @@ void GimbalNomalCtl(void)   //云台控制
 
 //				ProtectGimbal();//移位保护				
 			}
-//				if(control_mode==keyboard)//鼠标键盘
-//			{	
+				if(control_mode==keyboard)//鼠标键盘
+			{	
 //				yawdata.yawadd=fp32_constrain( (RC_Ctl.mouse.x)*MOUSE_YAW_MOVE_SPEEDRATE,
 //																			imu_data_access.Angle.expand_yaw-gimbal_motor[0].cal_angle-MAX_YAW_OFFSET_ANGLE,
 //																			imu_data_access.Angle.expand_yaw+gimbal_motor[0].cal_angle+MAX_YAW_OFFSET_ANGLE);							
@@ -141,7 +141,14 @@ void GimbalNomalCtl(void)   //云台控制
 //																						-gimbal_motor[1].cal_angle+PITCH_MIN,
 //																						-gimbal_motor[1].cal_angle-PITCH_MAX);
 //				pitchdata.pitchexp-=pitchdata.pitchadd;	//计算增量			
-//			}
+				
+				yawdata.yawexp+=(RC_Ctl.mouse.x )*MOUSE_YAW_MOVE_SPEEDRATE;
+				yawdata.yawexp=fp32_constrain(yawdata.yawexp,
+																			-MAX_YAW_OFFSET_ANGLE-gimbal_motor[0].cal_angle+imu_data_access.Angle.expand_yaw,
+																			MAX_YAW_OFFSET_ANGLE-gimbal_motor[0].cal_angle+imu_data_access.Angle.expand_yaw);	
+				
+				
+			}
 		
 //			yawdata.yawtemp=DJI_PID_Cal(&gimbal_yaw_pid_p,extend_angle.ecd_value,yawdata.yawexp,YAW_ROTATE_SPEED_MAX);				
 //			yawdata.yawout=-DJI_PID_Cal(&gimbal_yaw_pid_v,imu_data_access.Gyro.z,yawdata.yawtemp,GIMBAL6623_MOTOR_MAX_CURRENT);		

@@ -110,16 +110,16 @@ void JudgeSystemStat(void)
   */
 void JudgeChasisStat(void)
 {
-			if(last_key_valu.key_CTRL==DISSPRESS&&this_key_valu.key_CTRL==PRESS)
-			{
-					chasis_follow_stat=self_move;  //云台不跟随			
-			}
+//			if(last_key_valu.key_CTRL==DISSPRESS&&this_key_valu.key_CTRL==PRESS)
+//			{
+//					chasis_follow_stat=self_move;  //云台不跟随			
+//			}
 			
-			if(last_key_valu.key_CTRL==PRESS&&this_key_valu.key_CTRL==DISSPRESS)
-			{
-					gimabal_aux_mode=back_posion;  //云台回位
-					last_back_time = GetSysTickCnt();  //获取系统时间				
-			}
+//			if(last_key_valu.key_CTRL==PRESS&&this_key_valu.key_CTRL==DISSPRESS)
+//			{
+//					gimabal_aux_mode=back_posion;  //云台回位
+//					last_back_time = GetSysTickCnt();  //获取系统时间				
+//			}
 		
 }
 /**
